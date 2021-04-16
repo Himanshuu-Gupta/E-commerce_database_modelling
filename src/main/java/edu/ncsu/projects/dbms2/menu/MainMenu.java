@@ -17,7 +17,7 @@ public class MainMenu {
 	private static Scanner scan = new Scanner(System.in);
 	
 	@Autowired
-	private CustomerMenu customerMenu;
+	private MembersMenu customerMenu;
 	
 	public MainMenu() {
 		menuList.add("Customer Actions");

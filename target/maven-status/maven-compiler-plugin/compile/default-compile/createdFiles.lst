@@ -1,3 +1,4 @@
+edu\ncsu\projects\dbms2\dao\MemberDao$2.class
 edu\ncsu\projects\dbms2\service\MemberService.class
 edu\ncsu\projects\dbms2\entity\WarehouseInventory.class
 edu\ncsu\projects\dbms2\entity\WarehouseTransaction.class
@@ -9,19 +10,21 @@ edu\ncsu\projects\dbms2\entity\StaffPaycheck.class
 edu\ncsu\projects\dbms2\Dbms2Application.class
 edu\ncsu\projects\dbms2\entity\Store.class
 edu\ncsu\projects\dbms2\service\BooksService.class
-edu\ncsu\projects\dbms2\menu\CustomerMenu.class
 edu\ncsu\projects\dbms2\entity\AddRenewMembership.class
 edu\ncsu\projects\dbms2\entity\Supplier.class
 edu\ncsu\projects\dbms2\entity\TransferStock.class
 edu\ncsu\projects\dbms2\entity\Membership.class
 edu\ncsu\projects\dbms2\repo\BooksRepository.class
 edu\ncsu\projects\dbms2\entity\OrderAndReturnStocks.class
+edu\ncsu\projects\dbms2\dao\MemberDao$3.class
 edu\ncsu\projects\dbms2\dao\MemberDao.class
 edu\ncsu\projects\dbms2\entity\StoreInventory.class
 edu\ncsu\projects\dbms2\menu\MainMenu.class
 edu\ncsu\projects\dbms2\entity\CancelMembership.class
 edu\ncsu\projects\dbms2\entity\MemberReward.class
+edu\ncsu\projects\dbms2\dao\MemberDao$1.class
 edu\ncsu\projects\dbms2\entity\MemberTransactionsInvolve.class
 edu\ncsu\projects\dbms2\entity\ViewTransferStock.class
+edu\ncsu\projects\dbms2\menu\MembersMenu.class
 edu\ncsu\projects\dbms2\entity\Books.class
 edu\ncsu\projects\dbms2\entity\Staff.class
