@@ -1,5 +1,7 @@
 package edu.ncsu.projects.dbms2.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -46,5 +48,9 @@ public class Supplier {
 	}
 	public void setActiveStatus(Boolean activeStatus) {
 		this.activeStatus = activeStatus;
+	}
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 }

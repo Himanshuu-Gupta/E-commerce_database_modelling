@@ -137,7 +137,7 @@ public class DiscountsMenu {
 	}
 	
 	private void printCustomerMenu() {
-		System.out.println("SUPPLIER ACTIONS:");
+		System.out.println("DISCOUNT ACTIONS:");
 		for (int i=0; i<menuList.size(); i++) {
 			System.out.println(i+1 +": "+ menuList.get(i));
 		}

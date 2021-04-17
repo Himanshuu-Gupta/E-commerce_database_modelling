@@ -1,5 +1,7 @@
 package edu.ncsu.projects.dbms2.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -65,7 +67,7 @@ public class Member {
 	
 	@Override
 	public String toString() {
-		return this.memberId +"::"+this.firstName +"::"+this.lastName+"::"+this.address+"::"+this.email+"::"+this.phone+"::"+this.membershipLevel+"::"+this.activeStatus;
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 	
 }

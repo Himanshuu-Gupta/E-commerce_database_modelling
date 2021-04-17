@@ -1,13 +1,14 @@
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\StoreInventory.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\dao\BooksDao.java
+E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\dao\ProductDao.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\CancelMembership.java
+E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\menu\DiscountsMenu.java
+E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\dao\DiscountDao.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\Books.java
+E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\dao\SupplierDao.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\MemberTransactionsInvolve.java
-E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\repo\BooksRepository.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\Store.java
-E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\service\MemberService.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\dao\MemberDao.java
-E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\service\BooksService.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\Discount.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\OrderAndReturnStocks.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\WarehouseTransaction.java
@@ -17,6 +18,7 @@ E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\Dbms2Application.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\Supplier.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\StaffPaycheck.java
+E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\menu\SuppliersMenu.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\Staff.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\MemberTransaction.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\AddRenewMembership.java

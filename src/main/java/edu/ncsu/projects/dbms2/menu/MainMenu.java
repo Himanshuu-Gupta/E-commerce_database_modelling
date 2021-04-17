@@ -15,15 +15,22 @@ public class MainMenu {
 	private static Scanner scan = new Scanner(System.in);
 	
 	@Autowired
-	private MembersMenu customerMenu;
+	private MembersMenu membersMenu;
+	
+	@Autowired
+	private SuppliersMenu suppliersMenu;
+	
+	@Autowired
+	private DiscountsMenu discountsMenu;
 	
 	public MainMenu() {
-		menuList.add("Customer Actions");
+		menuList.add("Member Actions");
 		menuList.add("Store Actions");
 		menuList.add("Staff Actions");
 		menuList.add("Supplier Actions");
 		menuList.add("Warehouse Actions");
 		menuList.add("Report Generation");
+		menuList.add("Discount Actions");
 		menuList.add("Exit");
 	}
 	
@@ -47,7 +54,13 @@ public class MainMenu {
 	private void executeAction(int choice) {
 		switch(choice) {
 		case 1:
-			customerMenu.loadMenu();
+			membersMenu.loadMenu();
+			break;
+		case 4:
+			suppliersMenu.loadMenu();
+			break;
+		case 7:
+			discountsMenu.loadMenu();
 			break;
 		default:
 			System.out.println("Invalid choice!");
