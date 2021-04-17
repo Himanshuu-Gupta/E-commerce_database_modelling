@@ -8,7 +8,7 @@ public class MemberTransactionsInvolve {
 	private Integer productId;
 	private Double price;
 	private Double totalPrice;
-	private Integer quantity;
+	private Integer productQuantity;
 	private Integer discountId;
 	private Integer storeId;
 	
@@ -36,11 +36,11 @@ public class MemberTransactionsInvolve {
 	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	public Integer getQuantity() {
-		return quantity;
+	public Integer getProductQuantity() {
+		return productQuantity;
 	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setProductQuantity(Integer quantity) {
+		this.productQuantity = quantity;
 	}
 	public Integer getDiscountId() {
 		return discountId;
