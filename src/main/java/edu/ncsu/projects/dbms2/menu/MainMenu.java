@@ -23,6 +23,12 @@ public class MainMenu {
 	@Autowired
 	private DiscountsMenu discountsMenu;
 	
+	@Autowired
+	private StaffMenu staffMenu;
+	
+	@Autowired
+	private ProductActionsMenu productActionsMenu;
+	
 	public MainMenu() {
 		menuList.add("Member Actions");
 		menuList.add("Store Actions");
@@ -31,6 +37,7 @@ public class MainMenu {
 		menuList.add("Warehouse Actions");
 		menuList.add("Report Generation");
 		menuList.add("Discount Actions");
+		menuList.add("Product Actions");
 		menuList.add("Exit");
 	}
 	
@@ -56,12 +63,16 @@ public class MainMenu {
 		case 1:
 			membersMenu.loadMenu();
 			break;
+		case 3:
+			staffMenu.loadMenu();
 		case 4:
 			suppliersMenu.loadMenu();
 			break;
 		case 7:
 			discountsMenu.loadMenu();
 			break;
+		case 8:
+			productActionsMenu.loadMenu();
 		default:
 			System.out.println("Invalid choice!");
 		}
