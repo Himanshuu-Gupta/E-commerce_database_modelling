@@ -117,9 +117,11 @@ public class SuppliersMenu {
 		System.out.println("Enter attribute value: ");
 		String attributeValue = scan.nextLine();
 		
-		Supplier supplier = supplierDao.findByAttribute(attributeName, attributeValue);
+		List<Supplier> suppliers = supplierDao.findByAttribute(attributeName, attributeValue);
 		
-		System.out.println(supplier);
+		for (Supplier supplier : suppliers) {
+			System.out.println(supplier);
+		}
 	}
 
 	private void getAllEntities() {
@@ -132,7 +134,8 @@ public class SuppliersMenu {
 
 	public void loadMenu() {
 		while (true) {
-			printCustomerMenu();
+			System.out.println();
+			printMenu();
 			
 			System.out.print("Enter choice: ");
 			int choice = scan.nextInt();
@@ -149,7 +152,7 @@ public class SuppliersMenu {
 		}
 	}
 	
-	private void printCustomerMenu() {
+	private void printMenu() {
 		System.out.println("SUPPLIER ACTIONS:");
 		for (int i=0; i<menuList.size(); i++) {
 			System.out.println(i+1 +": "+ menuList.get(i));

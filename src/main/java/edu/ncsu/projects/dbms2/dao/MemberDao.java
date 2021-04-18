@@ -3,10 +3,10 @@ package edu.ncsu.projects.dbms2.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,6 +16,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import edu.ncsu.projects.dbms2.entity.AddRenewMembership;
+import edu.ncsu.projects.dbms2.entity.CancelMembership;
 import edu.ncsu.projects.dbms2.entity.Member;
 import edu.ncsu.projects.dbms2.entity.MemberTransaction;
 import edu.ncsu.projects.dbms2.entity.MemberTransactionsInvolve;
@@ -31,21 +33,23 @@ public class MemberDao {
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Member>(Member.class));
 	}
 	
-	public Member findByAttribute(String attributeName, Object attributeValue) {
+	public List<Member> findByAttribute(String attributeName, Object attributeValue) {
 		String sql = " SELECT * FROM MEMBERS WHERE "+ attributeName +" = ? ";
 		
 		List<Member> members = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Member>(Member.class), attributeValue);
 		
-		return members != null && !members.isEmpty() ? members.get(0) : null;
+		return members;
 	}
 	
-	public int addMember(Member member) {
-		String sql = " INSERT INTO MEMBERS VALUES (?,?,?,?,?,?,?,?) ";
+	public int addMember(Member member, AddRenewMembership membership) {
+		String addMemberSql = " INSERT INTO MEMBERS VALUES (?,?,?,?,?,?,?,?) ";
 		
-		return jdbcTemplate.update(sql, new PreparedStatementSetter() {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
 			
 			@Override
-			public void setValues(PreparedStatement ps) throws SQLException {
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(addMemberSql, Statement.RETURN_GENERATED_KEYS);
 				ps.setObject(1, null);
 				ps.setString(2, member.getFirstName());
 				ps.setString(3, member.getLastName());
@@ -54,8 +58,30 @@ public class MemberDao {
 				ps.setString(6, member.getPhone());
 				ps.setString(7, member.getMembershipLevel());
 				ps.setBoolean(8, member.getActiveStatus());
+				
+				return ps;
+			}
+		}, keyHolder);
+		
+		int addedMemberId = keyHolder.getKey().intValue();
+		membership.setMemberId(addedMemberId);
+		
+		String addMembershipSql = " INSERT INTO ADD_RENEW_MEMBERSHIPS VALUES (null, ?, ?, ?, ?, ?, ?) ";
+		
+		jdbcTemplate.update(addMembershipSql, new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, membership.getMemberId());
+				ps.setString(2, membership.getMembershipLevel());
+				ps.setInt(3, membership.getRegistrationOperatorId());
+				ps.setInt(4, membership.getStoreId());
+				ps.setDate(5, membership.getStartDate());
+				ps.setDate(6, membership.getEndDate());
 			}
 		});
+		
+		return addedMemberId;
 	}
 	
 	public int updateByAttribute(String attributeName, Object attributeValue, Integer memberId) {
@@ -98,10 +124,22 @@ public class MemberDao {
 		return jdbcTemplate.update(sql, memberId);
 	}
 	
+	public Integer getMembershipId(Integer memberId) {
+		String sql = " SELECT MAX(MEMBERSHIP_ID) FROM ADD_RENEW_MEMBERSHIPS WHERE MEMBER_ID = ? ";
+		
+		return jdbcTemplate.queryForObject(sql, Integer.class, memberId);
+	}
+	
 	public int removeFromDb(Integer memberId) {
 		String sql = " DELETE FROM MEMBERS WHERE MEMBER_ID = ? ";
 		
 		return jdbcTemplate.update(sql, memberId);
+	}
+	
+	public List<MemberTransaction> getMemberTransactions(Integer memberId) {
+		String sql = " SELECT * FROM MEMBER_TRANSACTIONS WHERE MEMBER_ID = ? ";
+		
+		return jdbcTemplate.queryForList(sql, MemberTransaction.class, memberId);
 	}
 	
 	public List<MemberTransactionsInvolve> getMemberTransactionDetails(Integer transactionId) {
@@ -117,15 +155,15 @@ public class MemberDao {
 	}
 	
 	public Integer addMemberTransaction(MemberTransaction transaction) {
-		String addTransaction = " INSERT INTO MEMBER_TRANSACTIONS INSERT (null, ? ,? ,? ,? ,?) ";
+		String addTransaction = " INSERT INTO MEMBER_TRANSACTIONS VALUES (null, ? ,? ,? ,? ,?) ";
 		
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		
-		int update = jdbcTemplate.update(new PreparedStatementCreator() {
+		jdbcTemplate.update(new PreparedStatementCreator() {
 			
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				PreparedStatement ps = con.prepareStatement(addTransaction);
+				PreparedStatement ps = con.prepareStatement(addTransaction, Statement.RETURN_GENERATED_KEYS);
 				ps.setInt(1, transaction.getMemberId());
 				ps.setInt(2, transaction.getCashierId());
 				ps.setInt(3, transaction.getStoreId());
@@ -143,7 +181,7 @@ public class MemberDao {
 		
 		String involveSql = " INSERT INTO MEMBER_TRANSACTIONS_INVOLVE VALUES (? ,? ,? ,? ,? ,? ,?) ";
 		
-		int[] updates = jdbcTemplate.batchUpdate(involveSql, new BatchPreparedStatementSetter() {
+		jdbcTemplate.batchUpdate(involveSql, new BatchPreparedStatementSetter() {
 			
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
@@ -164,4 +202,37 @@ public class MemberDao {
 		
 		return 0;
 	}
+	
+	public int addMembership(AddRenewMembership membership) {
+		String sql = " INSERT INTO ADD_RENEW_MEMBERSHIPS VALUES (null, ?, ?, ?, ?, ?, ?) ";
+		
+		return jdbcTemplate.update(sql, new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, membership.getMemberId());
+				ps.setString(2, membership.getMembershipLevel());
+				ps.setInt(3, membership.getRegistrationOperatorId());
+				ps.setInt(4, membership.getStoreId());
+				ps.setDate(5, membership.getStartDate());
+				ps.setDate(6, membership.getEndDate());
+			}
+		});
+	}
+	
+	public int cancelMembership(CancelMembership membership) {
+		String sql = " INSERT INTO CANCEL_MEMBERSHIPS VALUES (?, ?, ?, ?) ";
+		
+		return jdbcTemplate.update(sql, new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, membership.getMembershipId());
+				ps.setInt(2, membership.getMemberId());
+				ps.setInt(3, membership.getRegistrationOperatorId());
+				ps.setDate(4, membership.getCancelTime());
+			}
+		});
+	}
+	
 }

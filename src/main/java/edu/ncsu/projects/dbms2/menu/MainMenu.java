@@ -79,6 +79,7 @@ public class MainMenu {
 	}
 
 	private void printMainMenu() {
+		System.out.println();
 		System.out.println("MAIN MENU:");
 		for (int i=0; i<menuList.size(); i++) {
 			System.out.println(i+1 +": "+ menuList.get(i));

@@ -24,12 +24,12 @@ public class SupplierDao {
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Supplier>(Supplier.class));
 	}
 	
-	public Supplier findByAttribute(String attributeName, Object attributeValue) {
+	public List<Supplier> findByAttribute(String attributeName, Object attributeValue) {
 		String sql = " SELECT * FROM SUPPLIERS WHERE "+ attributeName +" = ? ";
 		
 		List<Supplier> suppliers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Supplier>(Supplier.class), attributeValue);
 		
-		return suppliers != null && !suppliers.isEmpty() ? suppliers.get(0) : null;
+		return suppliers;
 	}
 	
 	public int addSupplier(Supplier supplier) {

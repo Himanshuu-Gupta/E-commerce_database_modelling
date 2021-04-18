@@ -1,5 +1,7 @@
 package edu.ncsu.projects.dbms2.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -54,5 +56,8 @@ public class MemberTransactionsInvolve {
 	public void setStoreId(Integer storeId) {
 		this.storeId = storeId;
 	}
-	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
 }

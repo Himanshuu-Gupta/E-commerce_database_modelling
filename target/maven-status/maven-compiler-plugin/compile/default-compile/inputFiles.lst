@@ -7,6 +7,7 @@ E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\Books.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\dao\SupplierDao.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\MemberTransactionsInvolve.java
+E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\dao\ReportsDao.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\Store.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\dao\MemberDao.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\Discount.java
@@ -20,6 +21,7 @@ E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\StaffPaycheck.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\menu\SuppliersMenu.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\Staff.java
+E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\dao\MembershipDao.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\MemberTransaction.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\AddRenewMembership.java
 E:\Chinmay\dev\eclipse-workspace\dbms2.zip_expanded\dbms2\src\main\java\edu\ncsu\projects\dbms2\entity\TransferStock.java
