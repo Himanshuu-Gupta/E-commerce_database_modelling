@@ -18,6 +18,13 @@ public class ProductActionsDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
+	/**
+	 * Update information of a product based on the product id
+	 * @param attributeName
+	 * @param attributeValue
+	 * @param productID
+	 * @return
+	 */
 	public int updateByAttribute(String attributeName, Object attributeValue, Integer productID) {
 		
 		String sql1 = " UPDATE STORE_INVENTORY SET "+ attributeName +" = ? WHERE PRODUCT_ID = ? ";

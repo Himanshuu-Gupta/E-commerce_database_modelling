@@ -16,10 +16,17 @@ public class ProductActionsMenu {
 	@Autowired
 	private ProductActionsDao productActionsDao;
 	
+	/**
+	 * Define Product Actions Menu
+	 */
 	public ProductActionsMenu() {
 		productActions.add("Update Product");
 	}
-
+	
+	/**
+	 * Product Actions operations menu driver
+	 * @param choice
+	 */
 	private void executeAction(int choice) {
 		switch(choice) {
 		case 1: 
@@ -30,6 +37,9 @@ public class ProductActionsMenu {
 		}
 	}
 	
+	/**
+	 *	Driver to update the product based on Product id
+	 */
 	private void updateByAttribute() {
 		
 		System.out.println("Enter product ID to update: ");
@@ -47,6 +57,9 @@ public class ProductActionsMenu {
 		System.out.println("Updated "+ updateCount +" rows in STORE_INVENTORY and WAREHOUSE_TRANSACTION table.");
 	}
 	
+	/**
+	 * Driver to load the menu screen for staff
+	 */
 	public void loadMenu() {
 		while (true) {
 			printCustomerMenu();
@@ -66,6 +79,9 @@ public class ProductActionsMenu {
 		}
 	}
 	
+	/**
+	 * Driver to print the menu screen
+	 */
 	private void printCustomerMenu() {
 		System.out.println("CUSTOMER ACTIONS:");
 		for (int i=0; i<productActions.size(); i++) {

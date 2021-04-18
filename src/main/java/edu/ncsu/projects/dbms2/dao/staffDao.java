@@ -18,12 +18,22 @@ public class staffDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
+	/**
+	 * Extract information on all Staff Members
+	 * @return
+	 */
 	public List<Staff> findAll() {
 		String sql = " SELECT * FROM STAFF ";
 		
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Staff>(Staff.class));
 	}
 	
+	/**
+	 * Extract information on Staff Members based on an attribute
+	 * @param attributeName
+	 * @param attributeValue
+	 * @return
+	 */
 	public Staff findByAttribute(String attributeName, Object attributeValue) {
 		String sql = " SELECT * FROM STAFF WHERE "+ attributeName +" = ? ";
 		
@@ -32,6 +42,11 @@ public class staffDao {
 		return staff != null && !staff.isEmpty() ? staff.get(0) : null;
 	}
 	
+	/**
+	 * Add Staff Member to the database
+	 * @param staff
+	 * @return
+	 */
 	public int addStaff(Staff staff) {
 		String sql = "INSERT INTO STAFF VALUES (?,?,?,?,?,?,?,?,?,?)";
 		
@@ -53,6 +68,13 @@ public class staffDao {
 		});
 	}
 	
+	/**
+	 * Update information on Staff members using their ID
+	 * @param attributeName
+	 * @param attributeValue
+	 * @param staffId
+	 * @return
+	 */
 	public int updateByAttribute(String attributeName, Object attributeValue, Integer staffId) {
 		String sql = " UPDATE STAFF SET "+ attributeName +" = ? WHERE STAFF_ID = ? ";
 		
@@ -66,6 +88,11 @@ public class staffDao {
 		});
 	}
 	
+	/**
+	 * Delete Staff by putting in End of Employment date
+	 * @param staffId
+	 * @return
+	 */
 	public int deleteStaff(Integer staffId) {
 		
 		long millis=System.currentTimeMillis();  
@@ -76,9 +103,16 @@ public class staffDao {
 		return jdbcTemplate.update(sql, date, staffId);
 	}
 	
-	public Staff removeFromDb(Integer staffId) {
+	/**
+	 * Remove Staff member from the database permanently
+	 * @param staffId
+	 * @return
+	 */
+	public int removeFromDb(Integer staffId) {
 		//TODO
-		return null;
+		String sql = " DELETE FROM STAFF WHERE STAFF_ID = ?";
+
+		return jdbcTemplate.update(sql, staffId);
 	}
 	
 	

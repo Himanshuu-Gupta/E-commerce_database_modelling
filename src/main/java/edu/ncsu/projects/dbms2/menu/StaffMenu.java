@@ -20,6 +20,9 @@ public class StaffMenu {
 	@Autowired
 	private staffDao StaffDao;
 
+	/**
+	 * Define Staff Operations Menu
+	 */
 	public StaffMenu() {
 		staffList.add("View all Staff");
 		staffList.add("View Staff details by attribute");
@@ -28,7 +31,11 @@ public class StaffMenu {
 		staffList.add("Delete Staff by ID");
 		staffList.add("Back to Main Menu");
 	}
-
+	
+	/**
+	 * Staff operations menu driver
+	 * @param choice
+	 */
 	private void executeAction(int choice) {
 		switch(choice) {
 		case 1: 
@@ -56,6 +63,9 @@ public class StaffMenu {
 		}
 	}
 	
+	/**
+	 * Driver to extract staff information by attribute
+	 */
 	private void getStaffByAttribute() {
 			System.out.print("Enter attribute name: ");
 			String attributeName = scan.next().toUpperCase();
@@ -69,6 +79,9 @@ public class StaffMenu {
 			System.out.println(staff);
 	}
 
+	/**
+	 * Driver to extract all staff information
+	 */
 	private void getAllStaff() {
 			List<Staff> staffs = StaffDao.findAll();
 			
@@ -77,6 +90,10 @@ public class StaffMenu {
 		}
 	}
 
+	/**
+	 * Driver to add new staff information
+	 * @throws ParseException
+	 */
 	private void addStaff() throws ParseException {
 		Staff staff = new Staff();
 		
@@ -114,6 +131,9 @@ public class StaffMenu {
 		System.out.println("Added "+ count +" rows.");
 	}
 	
+	/**
+	 * Driver to update current staff information
+	 */
 	private void updateStaff() {
 		System.out.println("Enter attribute name: ");
 		String attributeName = scan.next().toUpperCase();
@@ -130,6 +150,9 @@ public class StaffMenu {
 		System.out.println("Updated "+ updateCount +" rows in STAFF table.");
 	}
 
+	/**
+	 * Driver to delete staff based on attribute
+	 */
 	private void deleteStaff() {
 		System.out.println("Enter staff ID to delete: ");
 		Integer staffId = scan.nextInt();
@@ -139,6 +162,9 @@ public class StaffMenu {
 		System.out.println("Deleted "+ deletedStaff +" rows.");
 	}
 	
+	/**
+	 * Driver to load the menu screen for staff
+	 */
 	public void loadMenu() {
 		while (true) {
 			printCustomerMenu();
@@ -158,6 +184,9 @@ public class StaffMenu {
 		}
 	}
 	
+	/**
+	 * Driver to print the menu screen
+	 */
 	private void printCustomerMenu() {
 		System.out.println("CUSTOMER ACTIONS:");
 		for (int i=0; i<staffList.size(); i++) {
