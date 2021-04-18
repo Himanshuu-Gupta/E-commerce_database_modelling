@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class CancelMembership {
 	private Integer membershipId;
 	private Integer memberId;
-	private String membershipLevel;
 	private Integer registrationOperatorId;
 	private Date cancelTime;
 	
@@ -23,12 +22,6 @@ public class CancelMembership {
 	}
 	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
-	}
-	public String getMembershipLevel() {
-		return membershipLevel;
-	}
-	public void setMembershipLevel(String membershipLevel) {
-		this.membershipLevel = membershipLevel;
 	}
 	public Integer getRegistrationOperatorId() {
 		return registrationOperatorId;

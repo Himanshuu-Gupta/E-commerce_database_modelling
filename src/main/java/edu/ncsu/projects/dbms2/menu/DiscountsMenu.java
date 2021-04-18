@@ -99,10 +99,10 @@ public class DiscountsMenu {
 		System.out.println("Enter Discount Percent: ");
 		discount.setDiscountPercent(scan.nextDouble());
 		
-		System.out.println("Enter Discount From Date: ");
+		System.out.println("Enter Discount From Date (YYYY-MM-dd): ");
 		discount.setFromDate(Date.valueOf(scan.next()));
 		
-		System.out.println("Enter Discount End Date: ");
+		System.out.println("Enter Discount End Date (YYYY-MM-dd): ");
 		discount.setEndDate(Date.valueOf(scan.next()));
 		
 		int addedEntities = discountDao.addDiscount(discount);
@@ -119,7 +119,8 @@ public class DiscountsMenu {
 	
 	public void loadMenu() {
 		while (true) {
-			printCustomerMenu();
+			System.out.println();
+			printMenu();
 			
 			System.out.print("Enter choice: ");
 			int choice = scan.nextInt();
@@ -136,7 +137,7 @@ public class DiscountsMenu {
 		}
 	}
 	
-	private void printCustomerMenu() {
+	private void printMenu() {
 		System.out.println("DISCOUNT ACTIONS:");
 		for (int i=0; i<menuList.size(); i++) {
 			System.out.println(i+1 +": "+ menuList.get(i));

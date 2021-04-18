@@ -10,7 +10,10 @@ import org.springframework.stereotype.Component;
 
 import edu.ncsu.projects.dbms2.dao.DiscountDao;
 import edu.ncsu.projects.dbms2.dao.MemberDao;
+import edu.ncsu.projects.dbms2.dao.MembershipDao;
 import edu.ncsu.projects.dbms2.dao.ProductDao;
+import edu.ncsu.projects.dbms2.entity.AddRenewMembership;
+import edu.ncsu.projects.dbms2.entity.CancelMembership;
 import edu.ncsu.projects.dbms2.entity.Member;
 import edu.ncsu.projects.dbms2.entity.MemberTransaction;
 import edu.ncsu.projects.dbms2.entity.MemberTransactionsInvolve;
@@ -29,6 +32,9 @@ public class MembersMenu {
 	@Autowired
 	private DiscountDao discountDao;
 	
+	@Autowired
+	private MembershipDao membershipDao;
+	
 	public MembersMenu() {
 		menuList.add("View all Members");
 		menuList.add("View Member details by attribute");
@@ -39,6 +45,7 @@ public class MembersMenu {
 		menuList.add("Add Member Transaction");
 		menuList.add("Generate Member Transaction Bill");
 		menuList.add("Add Member Returns");
+		menuList.add("Get member transactions");
 		menuList.add("Back to Main Menu");
 	}
 
@@ -71,11 +78,22 @@ public class MembersMenu {
 		case 9:
 			addMemberTransaction("RETURN");
 			break;
+		case 10:
+			getMemberTransactions();
+			break;
 		default:
 			System.out.println("Invalid Choice");
 		}
 	}
 	
+	private void getMemberTransactions() {
+		System.out.println("Enter member id: ");
+		Integer memberId = scan.nextInt();
+		
+		List<MemberTransaction> memberTransactions = memberDao.getMemberTransactions(memberId);
+		memberTransactions.forEach(System.out::println);
+	}
+
 	private void generateTransactionBill() {
 		System.out.println("Enter transaction ID: ");
 		Integer transactionId = scan.nextInt();
@@ -117,6 +135,8 @@ public class MembersMenu {
 		
 		Integer transactionId = memberDao.addMemberTransaction(transaction);
 		
+		System.out.println("Added transaction with transaction ID: "+ transactionId);
+		
 		System.out.println("Enter number of products returned: ");
 		int returnCount = scan.nextInt();
 		
@@ -156,7 +176,18 @@ public class MembersMenu {
 		System.out.println("Enter member ID to delete: ");
 		Integer memberId = scan.nextInt();
 		
+		CancelMembership cancelMembership = new CancelMembership();
+		cancelMembership.setCancelTime(new Date(System.currentTimeMillis()));
+		cancelMembership.setMemberId(memberId);
+		
+		System.out.println("Enter Registration Operator ID: ");
+		cancelMembership.setRegistrationOperatorId(scan.nextInt());
+		
+		cancelMembership.setMembershipId(memberDao.getMembershipId(memberId));
+		
 		int deletedMember = memberDao.deleteMember(memberId);
+		
+		memberDao.cancelMembership(cancelMembership);
 		
 		System.out.println("Deleted "+ deletedMember +" rows.");
 	}
@@ -179,6 +210,7 @@ public class MembersMenu {
 
 	private void addMember() {
 		Member member = new Member();
+		AddRenewMembership membership = new AddRenewMembership();
 		
 		scan.nextLine();
 		System.out.println("Enter first name: ");
@@ -200,12 +232,24 @@ public class MembersMenu {
 		
 		System.out.println("Enter membership level: ");
 		member.setMembershipLevel(scan.next());
+		membership.setMembershipLevel(member.getMembershipLevel());
 		
 		System.out.println("Enter phone: ");
 		member.setPhone(scan.next());
 		
-		int count = memberDao.addMember(member);
-		System.out.println("Added "+ count +" rows.");
+		System.out.println("Enter Registration Operator ID: ");
+		membership.setRegistrationOperatorId(scan.nextInt());
+		
+		System.out.println("Enter Store ID: ");
+		membership.setStoreId(scan.nextInt());
+		
+		membership.setStartDate(new Date(System.currentTimeMillis()));
+		
+		Double membershipDurationInMonths = membershipDao.getMembershipDurationInMonths(member.getMembershipLevel());
+		membership.setEndDate(Date.valueOf(membership.getStartDate().toLocalDate().plusMonths(membershipDurationInMonths.longValue())));
+		
+		int addedMemberId = memberDao.addMember(member, membership);
+		System.out.println("Added member with ID: "+ addedMemberId);
 	}
 
 	private void getMemberByAttribute() {
@@ -216,9 +260,11 @@ public class MembersMenu {
 		System.out.println("Enter attribute value: ");
 		String attributeValue = scan.nextLine();
 		
-		Member member = memberDao.findByAttribute(attributeName, attributeValue);
+		List<Member> members = memberDao.findByAttribute(attributeName, attributeValue);
 		
-		System.out.println(member);
+		for (Member member : members) {
+			System.out.println(member);
+		}
 	}
 
 	private void getAllMembers() {
@@ -231,7 +277,8 @@ public class MembersMenu {
 	
 	public void loadMenu() {
 		while (true) {
-			printCustomerMenu();
+			System.out.println();
+			printMenu();
 			
 			System.out.print("Enter choice: ");
 			int choice = scan.nextInt();
@@ -248,8 +295,8 @@ public class MembersMenu {
 		}
 	}
 	
-	private void printCustomerMenu() {
-		System.out.println("CUSTOMER ACTIONS:");
+	private void printMenu() {
+		System.out.println("MEMBER ACTIONS:");
 		for (int i=0; i<menuList.size(); i++) {
 			System.out.println(i+1 +": "+ menuList.get(i));
 		}
