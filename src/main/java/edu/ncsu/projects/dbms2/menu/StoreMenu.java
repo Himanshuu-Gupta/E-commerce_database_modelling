@@ -163,15 +163,15 @@ public class StoreMenu {
 		System.out.println("Enter from store ID: ");
 		Integer fromStoreId = scan.nextInt();
 		
-		scan.next();
+//		scan.next();
 		System.out.println("Enter to store ID: ");
 		Integer toStoreId = scan.nextInt();
 		
-		scan.next();
+//		scan.next();
 		System.out.println("Enter product ID: ");
 		Integer productID = scan.nextInt();
 		
-		scan.next();
+//		scan.next();
 		System.out.println("Enter to quantity: ");
 		Integer quantity = scan.nextInt();
 		
