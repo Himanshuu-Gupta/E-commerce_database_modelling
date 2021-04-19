@@ -23,6 +23,7 @@ public class WarehouseActionMenu {
 		menuList.add("Add Warehouse Transaction");
 		menuList.add("Warehouse to Supplier Return");
 		menuList.add("View Inventory");
+		menuList.add("Back to Main Menu");
 		menuList.add("Exit");
 	}
 	
