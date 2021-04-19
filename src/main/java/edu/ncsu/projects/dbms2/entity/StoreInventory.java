@@ -12,7 +12,7 @@ public class StoreInventory {
 	private String productName;
 	private Integer stockQuantity;
 	private Date productionDate;
-	private Date expirationDAte;
+	private Date expirationDate;
 	private Integer storeId;
 	private Double price;
 	public Integer getProductId() {
@@ -39,11 +39,11 @@ public class StoreInventory {
 	public void setProductionDate(Date productionDate) {
 		this.productionDate = productionDate;
 	}
-	public Date getExpirationDAte() {
-		return expirationDAte;
+	public Date getExpirationDate() {
+		return expirationDate;
 	}
-	public void setExpirationDAte(Date expirationDAte) {
-		this.expirationDAte = expirationDAte;
+	public void setExpirationDate(Date expirationDAte) {
+		this.expirationDate = expirationDAte;
 	}
 	public Integer getStoreId() {
 		return storeId;
