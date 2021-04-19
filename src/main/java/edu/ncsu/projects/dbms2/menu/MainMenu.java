@@ -27,6 +27,9 @@ public class MainMenu {
 	private StaffMenu staffMenu;
 	
 	@Autowired
+	private WarehouseActionMenu warehouseMenu;
+	
+	@Autowired
 	private ProductActionsMenu productActionsMenu;
 	
 	public MainMenu() {
