@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import edu.ncsu.projects.dbms2.dao.ReportsDao;
 
+@Component
 public class ReportsMenu {
 
 	private final List<String> menuList = new ArrayList<>();
