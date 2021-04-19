@@ -86,6 +86,9 @@ public class MembersMenu {
 		}
 	}
 	
+	/**
+	 * Get member transactions for a member ID input by the user.
+	 */
 	private void getMemberTransactions() {
 		System.out.println("Enter member id: ");
 		Integer memberId = scan.nextInt();
@@ -93,7 +96,10 @@ public class MembersMenu {
 		List<MemberTransaction> memberTransactions = memberDao.getMemberTransactions(memberId);
 		memberTransactions.forEach(System.out::println);
 	}
-
+	
+	/**
+	 * Generate bill and total bill price for a transaction ID input by the user.
+	 */
 	private void generateTransactionBill() {
 		System.out.println("Enter transaction ID: ");
 		Integer transactionId = scan.nextInt();
@@ -107,7 +113,10 @@ public class MembersMenu {
 		
 		System.out.println("Total Price of the Transaction: "+ transactionTotalPrice);
 	}
-
+	
+	/**
+	 * Remove record from MEMBERS table for member ID input by the user. 
+	 */
 	private void removeRecordFromDb() {
 		System.out.println("Enter member ID to remove: ");
 		Integer memberId = scan.nextInt(); 
@@ -116,6 +125,10 @@ public class MembersMenu {
 		System.out.println("Successfully removed "+ count +" records from MEMBERS table.");
 	}
 
+	/**
+	 * Workflow to add a new member transaction and transaction details. 
+	 * @param transactionType ORDER/RETURN
+	 */
 	private void addMemberTransaction(String transactionType) {
 		System.out.println("Enter member ID: ");
 		Integer memberId = scan.nextInt();
@@ -172,6 +185,9 @@ public class MembersMenu {
 		System.out.println("Entered the transaction successfully!");
 	}
 	
+	/**
+	 * Workflow to set a member status to inactive and cancel their membership.
+	 */
 	private void deleteMember() {
 		System.out.println("Enter member ID to delete: ");
 		Integer memberId = scan.nextInt();
@@ -191,7 +207,10 @@ public class MembersMenu {
 		
 		System.out.println("Deleted "+ deletedMember +" rows.");
 	}
-
+	
+	/**
+	 * Update given member attribute with given value for the member ID input by the user.
+	 */
 	private void updateMember() {
 		System.out.println("Enter attribute name: ");
 		String attributeName = scan.next().toUpperCase();
@@ -207,7 +226,10 @@ public class MembersMenu {
 		
 		System.out.println("Updated "+ updateCount +" rows in MEMBERS table.");
 	}
-
+	
+	/**
+	 * Method to add a new user and a membership for the member.
+	 */
 	private void addMember() {
 		Member member = new Member();
 		AddRenewMembership membership = new AddRenewMembership();
@@ -251,7 +273,10 @@ public class MembersMenu {
 		int addedMemberId = memberDao.addMember(member, membership);
 		System.out.println("Added member with ID: "+ addedMemberId);
 	}
-
+	
+	/**
+	 * Get all members matching the given value of the given variable.  
+	 */
 	private void getMemberByAttribute() {
 		System.out.print("Enter attribute name: ");
 		String attributeName = scan.next().toUpperCase();
@@ -266,7 +291,10 @@ public class MembersMenu {
 			System.out.println(member);
 		}
 	}
-
+	
+	/**
+	 * Fetch all members from the database.
+	 */
 	private void getAllMembers() {
 		List<Member> members = memberDao.findAll();
 		
@@ -275,6 +303,9 @@ public class MembersMenu {
 		}
 	}
 	
+	/**
+	 * Load the Members menu.
+	 */
 	public void loadMenu() {
 		while (true) {
 			System.out.println();
