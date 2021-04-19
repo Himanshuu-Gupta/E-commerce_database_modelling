@@ -83,6 +83,7 @@ public class MainMenu {
 			break;
 		case 3:
 			staffMenu.loadMenu();
+			break;
 		case 4:
 			suppliersMenu.loadMenu();
 			break;
@@ -100,6 +101,7 @@ public class MainMenu {
 			break;
 		case 9:
 			billingMenu.loadMenu();
+			break;
 		default:
 			System.out.println("Invalid choice!");
 		}
