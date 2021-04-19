@@ -104,8 +104,6 @@ public class WarehouseActionDao{
 		String sql3 = "SELECT MAX(TRANSACTION_ID) FROM ORDER_AND_RETURN_STOCKS WHERE PRODUCT_ID = ? ";
 		Integer transactionID = jdbcTemplate.queryForObject(sql3, Integer.class , productId);
 		
-		System.out.println("Transaction Date AND Transaction ID"+ Transactiondate + "----" +transactionID);
-		
 		String sql1 = "Insert into WAREHOUSE_TRANSACTION VALUES (?,?,?,?,?,?,?,?,?)";
 		jdbcTemplate.update(sql1, new PreparedStatementSetter() {
 			
