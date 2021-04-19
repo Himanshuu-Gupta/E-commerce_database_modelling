@@ -77,25 +77,21 @@ public class StoreDao {
 		
 		List<StoreInventory> stores = jdbcTemplate.query(sql, new BeanPropertyRowMapper<StoreInventory>(StoreInventory.class));
 		return !stores.isEmpty() ? stores.get(0) : null;
+		}
 		
-		
-//		return jdbcTemplate.update(sql, new PreparedStatementSetter() {
-			
-//			@Override
-//			public void setValues(PreparedStatement ps) throws SQLException {
-//				ps.setInt(1, storeId);
-//			}
-//		});
-	}
+
 	
 	public List<StoreInventory> storeToStore(Integer fromStoreId, Integer toStoreId, Integer quantity, Integer productId){
-		String sql = " UPDATE STORE_INVENTORY SET STOCK_QUANTITY = CASE WHEN STORE_ID ="+fromStoreId
-				+"THEN (STOCK_QUANTITY-"+quantity
-				+ ") WHEN STORE_ID = "+ toStoreId
-				+ "THEN (STOCK_QUANTITY +"+quantity+")"
-						+ "WHERE PRODUCT_ID ="+productId+";";
+		String sql = " UPDATE STORE_INVENTORY SET STOCK_QUANTITY = STOCK_QUANTITY + (CASE WHEN STORE_ID = "+fromStoreId
+				+" THEN ( -"+quantity
+				+") WHEN STORE_ID = " + toStoreId
+				+" THEN "+quantity+" END)"
+				+" WHERE PRODUCT_ID = " +productId+";";
+		jdbcTemplate.update(sql);
+		
+		String sql1 = " SELECT * FROM STORE_INVENTORY WHERE STORE_ID IN ("+toStoreId+","+fromStoreId+")";
 				
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<StoreInventory>(StoreInventory.class)); 
+		return jdbcTemplate.query(sql1, new BeanPropertyRowMapper<StoreInventory>(StoreInventory.class)); 
 	}
 	
 	public int updateStore(Store store) {
@@ -131,7 +127,7 @@ public class StoreDao {
 
 	
 	
-	public List<StoreInventory> returnStoreToWarehouse(Integer storeId, Integer productId, Integer quantity, Integer warehouseOpId) {
+	public List<StoreInventory> returnStoreToWarehouse(Integer storeId, Integer productId, Integer quantity) {
 			
 		String sql2 = " SELECT max(TRANSACTION_ID) as TRANSACTION_ID FROM WAREHOUSE_TRANSACTION WT INNER JOIN STORE_INVENTORY SI "
 				+ " ON  WT.PRODUCTION_DATE = SI.PRODUCTION_DATE"
@@ -139,10 +135,16 @@ public class StoreDao {
 				+ " AND WT.PRODUCT_ID = SI.PRODUCT_ID "
 				+ " WHERE WT.PRODUCT_ID = "+ productId;
 		
-		Integer transactionId =  jdbcTemplate.queryForObject(sql2, Integer.class);
+		//Double transactionId =  jdbcTemplate.queryForObject(sql2, Double.class);
+		Object transactionId =  jdbcTemplate.queryForObject(sql2, Integer.class);
+		
+		
+		String sql3 = "SELECT STAFF_ID FROM STAFF WHERE JOB_TITLE = 'WarehouseOperator'";
+		
+		Integer staffId =  jdbcTemplate.queryForObject(sql3, Integer.class);
 		
 		String sql = " INSERT INTO VIEW_TRANSFER_STOCK (TRANSFER_ID, PRODUCT_ID, WAREHOUSEOPERATOR_ID , STORE_ID , TRANSACTION_ID , QUANTITY, TRANSACTION_TYPE ) "
-				+ " VALUES(null,"+productId+","+warehouseOpId+","+storeId+","+transactionId+","+quantity+",'RETURN')";
+				+ " VALUES(null,"+productId+","+staffId+","+storeId+","+transactionId+","+quantity+",'RETURN')";
 		
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		
@@ -155,16 +157,7 @@ public class StoreDao {
 		}, keyHolder);
 		
 		int transferId = keyHolder.getKey().intValue();		
-//		jdbcTemplate.update(sql, new PreparedStatementSetter() {
-//			
-//			@Override
-//			public void setValues(PreparedStatement ps) throws SQLException {
-//				ps.setObject(1, null);
-//
-//				ResultSet rs = ps.getGeneratedKeys();
-//				
-//			}
-//		});
+
 		
 
 		String sql1 = " UPDATE STORE_INVENTORY AS SI "
@@ -177,6 +170,12 @@ public class StoreDao {
 		
 		
 		jdbcTemplate.update(sql1);
+		
+		String sql5 = " UPDATE WAREHOUSE_INVENTORY "
+				+ " SET CURRENT_STOCK = CURRENT_STOCK "+quantity
+				+ " WHERE PRODUCT_ID = "+productId;
+		
+		jdbcTemplate.update(sql5);
 		
 		String sql4 = " SELECT * FROM STORE_INVENTORY WHERE STORE_ID = "+storeId;
 		

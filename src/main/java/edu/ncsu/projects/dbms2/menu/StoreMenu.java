@@ -138,13 +138,13 @@ public class StoreMenu {
 		System.out.print("Enter Product id for return: ");
 		Integer productId = scan.nextInt();
 		
-		System.out.print("Enter Warehouse Operator ID: ");
-		Integer warehouseOpId = scan.nextInt();
+//		System.out.print("Enter Warehouse Operator ID: ");
+//		Integer warehouseOpId = scan.nextInt();
 		
 		System.out.print("Enter quantity for return: ");
 		Integer quantity = scan.nextInt();
 		
-		List<StoreInventory> stores = storeDao.returnStoreToWarehouse(storeId, productId, quantity, warehouseOpId);
+		List<StoreInventory> stores = storeDao.returnStoreToWarehouse(storeId, productId, quantity);
 		System.out.println(stores);
 	}
 	
