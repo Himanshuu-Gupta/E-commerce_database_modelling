@@ -33,14 +33,7 @@ public class StoreDao {
 	
 
 	
-//	public Store findByAttribute(String attributeName, Object attributeValue) {
-//		String sql = " SELECT * FROM MEMBERS WHERE "+ attributeName +" = ? ";
-//		
-//		List<Member> members = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Member>(Member.class), attributeValue);
-//		
-//		return members != null && !members.isEmpty() ? members.get(0) : null;
-//	}
-	
+	/* Adds new store to the database*/
 	public int addStore(Store store) {
 		String sql = " INSERT INTO STORES VALUES (?,?,?,?,?) ";
 		
@@ -59,6 +52,7 @@ public class StoreDao {
 		});
 	}
 	
+	/* Updates the details for a given store id */
 	public int updateByAttribute(String attributeName, Object attributeValue, Integer storeId) {
 		String sql = " UPDATE STORES SET "+ attributeName +" = ? WHERE STORE_ID = ? ";
 		
@@ -72,6 +66,7 @@ public class StoreDao {
 		});
 	}
 	
+	/* Displays all the products and details for the given store id*/
 	public StoreInventory viewStoreInv(Integer storeId) {
 		String sql = " SELECT * FROM STORE_INVENTORY WHERE STORE_ID = "+ storeId;
 		
@@ -80,7 +75,7 @@ public class StoreDao {
 		}
 		
 
-	
+	/* Transfers the mentioned x products for given product id from Store A to store B */
 	public List<StoreInventory> storeToStore(Integer fromStoreId, Integer toStoreId, Integer quantity, Integer productId){
 		String sql = " UPDATE STORE_INVENTORY SET STOCK_QUANTITY = STOCK_QUANTITY + (CASE WHEN STORE_ID = "+fromStoreId
 				+" THEN ( -"+quantity
@@ -94,6 +89,7 @@ public class StoreDao {
 		return jdbcTemplate.query(sql1, new BeanPropertyRowMapper<StoreInventory>(StoreInventory.class)); 
 	}
 	
+	/* Update all store  attributes for given store id */
 	public int updateStore(Store store) {
 		String sql = " UPDATE STORES SET ADDRESS = ? , PHONE = ? , ACTIVE_STATUS = ? , MANAGER_ID = ?"
 				+ " WHERE STORE_ID = ? ";
@@ -111,22 +107,22 @@ public class StoreDao {
 		});
 	}
 	
+	/* Deletes the given store details from table */
 	public int deleteStore(Integer storeId) {
 		
 		String sql = " DELETE FROM STORES WHERE STORE_ID = ? ";
 		return jdbcTemplate.update(sql, storeId);
 	}
 	
+	/* Inactivating the status for a store in table*/
 	public int removeFromDb(Integer storeId) {
 		String sql = " UPDATE STORES SET ACTIVE_STATUS = false WHERE STORE_ID = ? ";
 		
 		return jdbcTemplate.update(sql, storeId);
-		//TODO
-//		return null;
 	}
 
 	
-	
+	/* Transfers the x quantity of product from Store to Warehouse inventory */
 	public List<StoreInventory> returnStoreToWarehouse(Integer storeId, Integer productId, Integer quantity) {
 			
 		String sql2 = " SELECT max(TRANSACTION_ID) as TRANSACTION_ID FROM WAREHOUSE_TRANSACTION WT INNER JOIN STORE_INVENTORY SI "
@@ -135,7 +131,6 @@ public class StoreDao {
 				+ " AND WT.PRODUCT_ID = SI.PRODUCT_ID "
 				+ " WHERE WT.PRODUCT_ID = "+ productId;
 		
-		//Double transactionId =  jdbcTemplate.queryForObject(sql2, Double.class);
 		Object transactionId =  jdbcTemplate.queryForObject(sql2, Integer.class);
 		
 		

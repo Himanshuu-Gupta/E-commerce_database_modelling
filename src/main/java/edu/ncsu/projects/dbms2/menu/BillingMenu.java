@@ -86,7 +86,6 @@ public class BillingMenu {
 	/* The method returns the already generated paychecks for a particular staff member */
 	
 	private void getSaffPaycheckById() {
-//		TODO
 		System.out.println("Enter staff ID to fetch paycheck: ");
 		Integer staffId = scan.nextInt();
 		
@@ -97,9 +96,7 @@ public class BillingMenu {
 	
 	/*Get bills for all the suppliers basis existing transactions*/
 	private void getAllSupplierBills() {
-//		List<WarehouseTransaction> supplierBills = 
 		billingDao.supplierBills();
-//		System.out.println(supplierBills);
 		
 	}
 	
@@ -121,7 +118,6 @@ public class BillingMenu {
 	
 	/*Get customer bills generated for all the transactions for any store for a specific customer*/
 	private void getAllCustomerBillById() {
-//		TODO
 		System.out.println("Enter transaction ID to fetch customer bill: ");
 		Integer transactionId = scan.nextInt();
 		
@@ -136,14 +132,12 @@ public class BillingMenu {
 	
 	/*Get already generated reward details for all customers*/
 	private void getCustomerRewardDetails() {
-//		TODO
 		List<MemberReward> rewards = billingDao.rewardChecks();
 		System.out.println(rewards);
 	}
 	
 	/*Get already generated reward details for all customers*/
 	private void getCustomerRewardDetailsById() {
-//		TODO
 		System.out.println("Enter customerID: ");
 		Integer memberId = scan.nextInt();
 		
@@ -167,7 +161,7 @@ public class BillingMenu {
 		
 	}
 	
-	/*Generate paycheck of specific */
+	/*Generate paycheck for specific staff member*/
 	private void generateSaffPaycheck() {
 		System.out.println("Enter staff id for which to generate paycheck:");
 		Integer staffId = scan.nextInt();
@@ -183,6 +177,7 @@ public class BillingMenu {
 		
 	}
 	
+	/*Loads the menu options listed at the start of the program for each section*/
 	public void loadMenu() {
 		while (true) {
 			printStoreMenu();

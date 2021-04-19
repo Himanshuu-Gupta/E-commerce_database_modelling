@@ -62,6 +62,7 @@ public class StoreMenu {
 		}
 	}
 	
+	/* Delete all store  attributes for given store id */
 	private void deleteStore() {
 		System.out.println("Enter store ID to delete: ");
 		Integer storeId = scan.nextInt();
@@ -71,6 +72,7 @@ public class StoreMenu {
 		System.out.println("Deleted "+ deletedStore +" rows.");
 	}
 
+	/* Updates the details for a given store id */
 	private void updateStore() {
 		System.out.println("Enter store ID to update: ");
 		Integer storeId = scan.nextInt();
@@ -88,6 +90,7 @@ public class StoreMenu {
 		System.out.println("Updated "+ updateCount +" rows in STORES table.");
 	}
 
+	/* Adds new store to the database*/
 	private void addStore() {
 		Store store = new Store();
 		
@@ -110,12 +113,11 @@ public class StoreMenu {
 		System.out.println("Added "+ count +" rows.");
 	}
 
+	/* Displays all the products and details for the given store id*/
 	private void getStoreInventory() {
 		System.out.print("Enter Store id: ");
 		Integer storeId = scan.nextInt();
 		
-//		scan.nextLine();
-//		System.out.println("Enter attribute value: ");
 		StoreInventory store = storeDao.viewStoreInv(storeId);
 		
 		System.out.println(store);
@@ -138,15 +140,13 @@ public class StoreMenu {
 		System.out.print("Enter Product id for return: ");
 		Integer productId = scan.nextInt();
 		
-//		System.out.print("Enter Warehouse Operator ID: ");
-//		Integer warehouseOpId = scan.nextInt();
-		
 		System.out.print("Enter quantity for return: ");
 		Integer quantity = scan.nextInt();
 		
 		List<StoreInventory> stores = storeDao.returnStoreToWarehouse(storeId, productId, quantity);
 		System.out.println(stores);
 	}
+	
 	
 	private void inactivateStore() {
 		System.out.println("Enter store ID to be set as inactive: ");
@@ -158,20 +158,17 @@ public class StoreMenu {
 	
 	}
 	
+	/* Transfers x quantity from store A to store B, the storeids are inputed by the user from terminal */
 	private void transferToStore() {
-//		TODO
 		System.out.println("Enter from store ID: ");
 		Integer fromStoreId = scan.nextInt();
 		
-//		scan.next();
 		System.out.println("Enter to store ID: ");
 		Integer toStoreId = scan.nextInt();
 		
-//		scan.next();
 		System.out.println("Enter product ID: ");
 		Integer productID = scan.nextInt();
 		
-//		scan.next();
 		System.out.println("Enter to quantity: ");
 		Integer quantity = scan.nextInt();
 		
@@ -181,6 +178,7 @@ public class StoreMenu {
 		
 	}
 	
+	/*Loads the menu options listed at the start of the program for each section*/
 	public void loadMenu() {
 		while (true) {
 			printStoreMenu();
