@@ -131,7 +131,7 @@ public class StoreDao {
 
 	
 	
-	public List<StoreInventory> returnStoreToWarehouse(Integer storeId, Integer productId, Integer quantity ) {
+	public List<StoreInventory> returnStoreToWarehouse(Integer storeId, Integer productId, Integer quantity, Integer warehouseOpId) {
 			
 		String sql2 = " SELECT max(TRANSACTION_ID) as TRANSACTION_ID FROM WAREHOUSE_TRANSACTION WT INNER JOIN STORE_INVENTORY SI "
 				+ " ON  WT.PRODUCTION_DATE = SI.PRODUCTION_DATE"
