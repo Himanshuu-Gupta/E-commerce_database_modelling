@@ -18,14 +18,14 @@ public class WarehouseActionDao{
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	/**
-	 * 
-	 * @param attributeValue 
-	 * @param productID
-	 * @param storeID
-	 * @param warehouseOperatorID
-	 * @return
+	 * WarehousetoStoreTransfer handles the request to transfer product from stores to the main warehouse.
+	 * @param quantity - quantity of the stock needs to be transferred from store to warehouse.
+	 * @param productID - ID of the product needs to be transferred
+	 * @param storeID - ID of the Store
+	 * @param warehouseOperatorID - WareHouse Operator ID doing the transaction
+	 * @return The number of products added in the warehouse
 	 */
-	public int WarehouseToStoreTransfer(Object attributeValue, Integer productID, Integer storeID, Integer warehouseOperatorID) {
+	public int WarehouseToStoreTransfer(Integer quantity, Integer productID, Integer storeID, Integer warehouseOperatorID) {
 		String sql = "Update WAREHOUSE_INVENTORY SET CURRENT_STOCK  = CURRENT_STOCK  - ? "
 				+ "WHERE PRODUCT_ID = ? ";
 		
@@ -37,8 +37,8 @@ public class WarehouseActionDao{
 		
 		String sql3 = "Insert into VIEW_TRANSFER_STOCK VALUES (?,?,?,?,?,?,?)";
 		
-		jdbcTemplate.update(sql, attributeValue, productID);
-		jdbcTemplate.update(sql1, attributeValue, productID, storeID);
+		jdbcTemplate.update(sql, quantity, productID);
+		jdbcTemplate.update(sql1, quantity, productID, storeID);
 		
 		return jdbcTemplate.update(sql3, new PreparedStatementSetter() {
 			
@@ -49,12 +49,20 @@ public class WarehouseActionDao{
 				ps.setInt(3, productID);
 				ps.setInt(4, storeID);
 				ps.setInt(5, transactionID);
-				ps.setObject(6, attributeValue);
+				ps.setObject(6, quantity);
 				ps.setString(7, "SUPPLY");
 			}
 		});
 	}
 	
+	/**
+	 *  WarehousetoSupplierReturn handles the request to return any product to the supplier from the warehouse
+	 * @param productId - ID of the product which needs to be returned to the store
+	 * @param supplierId - Id of the supplier we are returning the product to
+	 * @param warehouseOperatorID - WareHouse Operator ID doing the transaction
+	 * @param quantity - quantity of the stock needs to be returned
+	 * @return - The number of product returned to the supplier
+	 */
 	public int WarehousetoSupplierReturn(Integer productId, Integer supplierId, Integer warehouseOperatorID, Integer quantity) {
 		String sql = "Insert into ORDER_AND_RETURN_STOCKS VALUES (?,?,?,?,?)";
 		jdbcTemplate.update(sql, new PreparedStatementSetter() {
@@ -80,13 +88,29 @@ public class WarehouseActionDao{
 			}
 		});
 	}
-	
+	/**
+	 * ViewInventory handles the request to display all the products in the warehouse inventory.
+	 * The function doesnt require any inputs.
+	 * @return The list of the all the products present in WAREHOUSE_INVENTORY
+	 */
 	public List<WarehouseInventory> ViewInventory() {
 		String sql = " SELECT * FROM WAREHOUSE_INVENTORY";
 		
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<WarehouseInventory>(WarehouseInventory.class));
 	}
-	
+	/**
+	 * addWarehouseTransaction handles the request to add any new product coming in our inventory.
+	 * @param productId - Id of the new incoming product
+	 * @param supplierId - ID of the supplier who is providing the product
+	 * @param warehouseOperatorID - WareHouse Operator ID doing the transaction
+	 * @param Stock - The quantity of the product 
+	 * @param Price - The market price of the product
+	 * @param productionDate - Production Date of the Product
+	 * @param expDate - Expiration Date of the product
+	 * @param Product_name - Name of the product 
+	 * @param Transactiondate - Date of the transaction we are receiving the product into inventory
+	 * @return The number of the products added into the inventory 
+	 */
 	public int addWarehouseTransaction(Integer productId, Integer supplierId, Integer warehouseOperatorID, Integer Stock, Integer Price, Date productionDate, Date expDate, String Product_name, Date Transactiondate) {
 		String sql = "Insert into ORDER_AND_RETURN_STOCKS VALUES (?,?,?,?,?)";
 		jdbcTemplate.update(sql, new PreparedStatementSetter() {
