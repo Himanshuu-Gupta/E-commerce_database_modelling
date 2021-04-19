@@ -84,7 +84,7 @@ public class ReportsDao {
 	public List<Map<String, Object>> merchStoreReport(Integer storeId) {
 		String sql = " SELECT * FROM STORE_INVENTORY WHERE STORE_ID = ? ";
 		
-		return jdbcTemplate.queryForList(sql, new Object[] {storeId}, new int[] {Types.DATE});
+		return jdbcTemplate.queryForList(sql, new Object[] {storeId}, new int[] {Types.INTEGER});
 	}
 	
 	/**
