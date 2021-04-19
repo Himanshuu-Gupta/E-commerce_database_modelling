@@ -68,6 +68,9 @@ public class MainMenu {
 		case 4:
 			suppliersMenu.loadMenu();
 			break;
+		case 5:
+			warehouseMenu.loadMenu();
+			break;
 		case 7:
 			discountsMenu.loadMenu();
 			break;
