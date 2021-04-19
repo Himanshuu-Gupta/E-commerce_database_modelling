@@ -167,7 +167,7 @@ public class StoreDao {
 		jdbcTemplate.update(sql1);
 		
 		String sql5 = " UPDATE WAREHOUSE_INVENTORY "
-				+ " SET CURRENT_STOCK = CURRENT_STOCK "+quantity
+				+ " SET CURRENT_STOCK = CURRENT_STOCK + "+quantity
 				+ " WHERE PRODUCT_ID = "+productId;
 		
 		jdbcTemplate.update(sql5);
