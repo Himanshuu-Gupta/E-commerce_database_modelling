@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import ch.qos.logback.core.util.DatePatternToRegexUtil;
 import edu.ncsu.projects.dbms2.dao.ReportsDao;
 
@@ -13,6 +15,7 @@ public class ReportsMenu {
 	private final List<String> menuList = new ArrayList<>();
 	private static Scanner scan = new Scanner(System.in);
 	
+	@Autowired
 	private ReportsDao reportsDao;
 	
 	public ReportsMenu() {
