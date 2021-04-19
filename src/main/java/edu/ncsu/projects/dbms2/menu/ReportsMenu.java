@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ch.qos.logback.core.util.DatePatternToRegexUtil;
 import edu.ncsu.projects.dbms2.dao.ReportsDao;
 
 public class ReportsMenu {
