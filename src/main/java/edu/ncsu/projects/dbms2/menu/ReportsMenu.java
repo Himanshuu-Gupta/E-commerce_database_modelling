@@ -3,7 +3,11 @@ package edu.ncsu.projects.dbms2.menu;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.Scanner;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -64,7 +68,9 @@ public class ReportsMenu {
 		}
 	}
 	
-	
+	/**
+	 * Method to get monthly sales report for a particular store.
+	 */
 	private void getStoresMonth() {
 		
 		System.out.println("Enter store id for store report:");
@@ -72,17 +78,27 @@ public class ReportsMenu {
 		
 		System.out.println("Enter From Date:");
 		Date fromDate = Date.valueOf(scan.next());
+		System.out.println(fromDate);
 		
 		System.out.println("Enter To Date:");
 		Date toDate = Date.valueOf(scan.next());
+		System.out.println(toDate);
 		
-		reportsDao.monthlySalesByStoreReport(storeId,fromDate,toDate);
-//		monthlyStoreReport();
-		
+		List<Map<String, Object>> report = reportsDao.monthlySalesByStoreReport(storeId,fromDate,toDate);
+		printReport(report);
 	}
 	
+	private void printReport(List<Map<String, Object>> report) {
+		for (Map<String, Object> row : report) {
+			String rowString = row.entrySet().stream().map(Object::toString).collect(Collectors.joining(" :: "));
+			System.out.println(rowString);
+		}
+	}
+	
+	/**
+	 * Method to get yearly sales report for a particular store.
+	 */
 	private void getStoresYear() {
-		
 		System.out.println("Enter store id for store report:");
 		Integer storeId = scan.nextInt();
 		
@@ -92,11 +108,13 @@ public class ReportsMenu {
 		System.out.println("Enter To Date:");
 		Date toDate = Date.valueOf(scan.next());
 		
-		reportsDao.yearlySalesByStoreReport(storeId,fromDate,toDate);
-		
-		
+		List<Map<String, Object>> report = reportsDao.yearlySalesByStoreReport(storeId,fromDate,toDate);
+		printReport(report);
 	}
 	
+	/**
+	 * Method to get monthly sales report for the entire chain.
+	 */
 	private void getStoresChainMonth() {
 		System.out.println("Enter From Date:");
 		Date fromDate = Date.valueOf(scan.next());
@@ -104,9 +122,13 @@ public class ReportsMenu {
 		System.out.println("Enter To Date:");
 		Date toDate = Date.valueOf(scan.next());
 		
-		reportsDao.chainMonthlySalesReport(fromDate,toDate);
+		List<Map<String, Object>> report = reportsDao.chainMonthlySalesReport(fromDate,toDate);
+		printReport(report);
 	}
-	
+
+	/**
+	 * Method to get yearly sales report for the entire chain.
+	 */
 	private void getStoresChainYear() {
 		
 		System.out.println("Enter From Date:");
@@ -115,19 +137,24 @@ public class ReportsMenu {
 		System.out.println("Enter To Date:");
 		Date toDate = Date.valueOf(scan.next());
 		
-		reportsDao.chainYearlySalesReport(fromDate,toDate);
-		
+		List<Map<String, Object>> report = reportsDao.chainYearlySalesReport(fromDate,toDate);
+		printReport(report);
 	}
 	
-	
+	/**
+	 * Method to get store inventory report for a particular store.
+	 */
 	private void merchandiseStoreInventory() {
 		System.out.println("Enter store id for store report:");
 		Integer storeId = scan.nextInt();
 		
-		reportsDao.merchStoreReport(storeId);
-		
+		List<Map<String, Object>> report = reportsDao.merchStoreReport(storeId);
+		printReport(report);
 	}
 	
+	/**
+	 * Method to get monthly customer membership report in a given time range.
+	 */
 	private void customerGrowthMonth() {
 		
 		System.out.println("Enter From Date:");
@@ -136,10 +163,13 @@ public class ReportsMenu {
 		System.out.println("Enter To Date:");
 		Date toDate = Date.valueOf(scan.next());
 		
-		reportsDao.monthlyCustomerGrowthReport(fromDate,toDate);
-		
+		List<Map<String, Object>> report = reportsDao.monthlyCustomerGrowthReport(fromDate,toDate);
+		printReport(report);
 	}
 	
+	/**
+	 * Method to get yearly customer membership report in a given time range.
+	 */
 	private void customerGrowthYear() {
 		System.out.println("Enter From Date:");
 		Date fromDate = Date.valueOf(scan.next());
@@ -147,10 +177,13 @@ public class ReportsMenu {
 		System.out.println("Enter To Date:");
 		Date toDate = Date.valueOf(scan.next());
 		
-		reportsDao.yearlyCustomerGrowthReport(fromDate,toDate);
-		
+		List<Map<String, Object>> report = reportsDao.yearlyCustomerGrowthReport(fromDate,toDate);
+		printReport(report);
 	}
 	
+	/**
+	 * Method to get a particular customer spendings report.
+	 */
 	private void customerActivityReport() {
 		
 		System.out.println("Enter Member Id:");
@@ -162,8 +195,8 @@ public class ReportsMenu {
 		System.out.println("Enter To Date:");
 		Date toDate = Date.valueOf(scan.next());
 		
-		reportsDao.customerActivityReport(customerId, fromDate, toDate);
-		
+		List<Map<String, Object>> report = reportsDao.customerActivityReport(customerId, fromDate, toDate);
+		printReport(report);
 	}
 	
 	public void loadMenu() {
