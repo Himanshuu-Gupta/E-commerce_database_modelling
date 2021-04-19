@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -32,6 +34,15 @@ public class MainMenu {
 	@Autowired
 	private ProductActionsMenu productActionsMenu;
 	
+	@Autowired
+	private BillingMenu billingMenu;
+	
+	@Autowired
+	private StoreMenu storeMenu;
+	
+	@Autowired
+	private ReportsMenu reportsMenu;
+	
 	public MainMenu() {
 		menuList.add("Member Actions");
 		menuList.add("Store Actions");
@@ -41,6 +52,7 @@ public class MainMenu {
 		menuList.add("Report Generation");
 		menuList.add("Discount Actions");
 		menuList.add("Product Actions");
+		menuList.add("Billing Actions");		
 		menuList.add("Exit");
 	}
 	
@@ -66,6 +78,9 @@ public class MainMenu {
 		case 1:
 			membersMenu.loadMenu();
 			break;
+		case 2:
+			storeMenu.loadMenu();
+			break;
 		case 3:
 			staffMenu.loadMenu();
 		case 4:
@@ -74,11 +89,17 @@ public class MainMenu {
 		case 5:
 			warehouseMenu.loadMenu();
 			break;
+		case 6:
+			reportsMenu.loadMenu();
+			break;
 		case 7:
 			discountsMenu.loadMenu();
 			break;
 		case 8:
 			productActionsMenu.loadMenu();
+			break;
+		case 9:
+			billingMenu.loadMenu();
 		default:
 			System.out.println("Invalid choice!");
 		}
