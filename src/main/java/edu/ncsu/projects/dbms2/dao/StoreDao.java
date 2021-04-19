@@ -141,12 +141,8 @@ public class StoreDao {
 		
 		Integer transactionId =  jdbcTemplate.queryForObject(sql2, Integer.class);
 		
-		String sql3 = "SELECT STAFF_ID FROM STAFF WHERE JOB_TITLE = 'WarehouseOperator'";
-		
-		Integer staffId =  jdbcTemplate.queryForObject(sql3, Integer.class);
-		
 		String sql = " INSERT INTO VIEW_TRANSFER_STOCK (TRANSFER_ID, PRODUCT_ID, WAREHOUSEOPERATOR_ID , STORE_ID , TRANSACTION_ID , QUANTITY, TRANSACTION_TYPE ) "
-				+ " VALUES(null,"+productId+","+staffId+","+storeId+","+transactionId+","+quantity+",'RETURN')";
+				+ " VALUES(null,"+productId+","+warehouseOpId+","+storeId+","+transactionId+","+quantity+",'RETURN')";
 		
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		
