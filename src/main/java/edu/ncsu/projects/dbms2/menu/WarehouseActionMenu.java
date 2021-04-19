@@ -17,7 +17,9 @@ public class WarehouseActionMenu {
 	
 	@Autowired
 	private WarehouseActionDao WarehouseActionDao;
-	
+	/**
+	 * The driver function to list all the  actions in the Warehouse menu
+	 */
 	public WarehouseActionMenu() {
 		menuList.add("Warehouse to Store Transfer");
 		menuList.add("Add Warehouse Transaction");
@@ -27,6 +29,10 @@ public class WarehouseActionMenu {
 		menuList.add("Exit");
 	}
 	
+	/**
+	 * Driver function to call the desired API's based on the user choice
+	 * @param choice - type<int> - User choice defining which action to perform
+	 */
 	private void executeAction(int choice) {
 		switch(choice) {
 		case 1: 
@@ -45,7 +51,9 @@ public class WarehouseActionMenu {
 			System.out.println("Invalid Choice");
 		}
 	}
-	
+	/**
+	 * warehousetransfer API's will be taking all inputs from user and trigger a call to WarehouseToStoreTransfer API in WarehouseActionDao
+	 */
 	private void warehousetransfer() {
 		System.out.println("Enter the Warehouse Operator ID : ");
 		Integer warehouseId = scan.nextInt();
@@ -63,7 +71,10 @@ public class WarehouseActionMenu {
 		
 		System.out.println("Transfered"+ transfered +" rows.");
 	}
-	
+	/**
+	 * API to add a new product transaction in our API. 
+	 * addtransaction will be taking all required input from user and trigger a call to addWarehouseTransaction in WarehouseActionDao
+	 */
 	private void addtransaction() {
 		System.out.println("Enter the Warehouse Operator ID : ");
 		Integer warehouseId = scan.nextInt();
@@ -100,6 +111,10 @@ public class WarehouseActionMenu {
 		System.out.println("New Transacation Recorded for product - "+ productId);
 	}
 	
+	/**
+	 * API to handle return requests to the supplier
+	 * warehousesupplierreturn will be taking all required input from user and trigger a call to WarehousetoSupplierReturn in WarehouseActionDao
+	 */
 	private void warehousesupplierreturn() {
 		System.out.println("Enter the Warehouse Operator ID : ");
 		Integer warehouseId = scan.nextInt();
@@ -117,7 +132,10 @@ public class WarehouseActionMenu {
 		
 		System.out.println("Returned the product "+ productId);
 	}
-	
+	/**
+	 * API to dispaly all the products present in our inventory
+	 * The API will trigger a call to ViewInvetory API in WarehouseActionDao and receive a list of all the products which will be displayed to the user
+	 */ 
 	private void viewinventory() {
 		List<WarehouseInventory> inventory = WarehouseActionDao.ViewInventory();
 		
@@ -126,7 +144,9 @@ public class WarehouseActionMenu {
 		}
 	}
 	
-	
+	/**
+	 * Driver Funciton to load the action item menu present for Warehouse
+	 */
 	public void loadMenu() {
 		while (true) {
 			printWarehouseActionMenu();
@@ -146,6 +166,9 @@ public class WarehouseActionMenu {
 		}
 	}
 	
+	/**
+	 * Driver function to display the menu items
+	 */
 	private void printWarehouseActionMenu() {
 		System.out.println("WAREHOUSE ACTIONS:");
 		for (int i=0; i<menuList.size(); i++) {
