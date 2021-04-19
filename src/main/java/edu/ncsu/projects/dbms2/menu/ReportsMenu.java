@@ -186,7 +186,7 @@ public class ReportsMenu {
 	}
 	
 	private void printStoreMenu() {
-		System.out.println("STORE ACTIONS:");
+		System.out.println("REPORTS ACTIONS:");
 		for (int i=0; i<menuList.size(); i++) {
 			System.out.println(i+1 +": "+ menuList.get(i));
 		}
