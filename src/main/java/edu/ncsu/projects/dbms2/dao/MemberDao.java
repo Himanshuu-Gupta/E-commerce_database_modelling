@@ -188,7 +188,8 @@ public class MemberDao {
 	public List<MemberTransaction> getMemberTransactions(Integer memberId) {
 		String sql = " SELECT * FROM MEMBER_TRANSACTIONS WHERE MEMBER_ID = ? ";
 		
-		return jdbcTemplate.queryForList(sql, MemberTransaction.class, memberId);
+		// return jdbcTemplate.queryForList(sql, MemberTransaction.class, memberId);
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<MemberTransaction>(MemberTransaction.class), memberId);
 	}
 	
 	/**
@@ -199,7 +200,8 @@ public class MemberDao {
 	public List<MemberTransactionsInvolve> getMemberTransactionDetails(Integer transactionId) {
 		String sql = " SELECT * FROM MEMBER_TRANSACTIONS_INVOLVE WHERE TRANSACTION_ID = ? ";
 		
-		return jdbcTemplate.queryForList(sql, MemberTransactionsInvolve.class, transactionId);
+		// return jdbcTemplate.queryForList(sql, MemberTransactionsInvolve.class, transactionId);
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<MemberTransactionsInvolve>(MemberTransactionsInvolve.class), transactionId);
 	}
 	
 	/**
