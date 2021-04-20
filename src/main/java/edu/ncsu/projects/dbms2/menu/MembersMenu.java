@@ -144,7 +144,7 @@ public class MembersMenu {
 	 */
 	private void addMemberTransaction(String transactionType) {
 		
-		TransactionStatus status = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+		TransactionStatus checkpoint = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
 		
 		try {
 			System.out.println("Enter member ID: ");
@@ -171,10 +171,10 @@ public class MembersMenu {
 			
 			System.out.println("Entered the transaction successfully!");
 			
-			platformTransactionManager.commit(status);
+			platformTransactionManager.commit(checkpoint);
 		
 		} catch (Exception e) {
-			platformTransactionManager.rollback(status);
+			platformTransactionManager.rollback(checkpoint);
 			System.out.println("Error! Rolling back transaction!");
 		}
 	}

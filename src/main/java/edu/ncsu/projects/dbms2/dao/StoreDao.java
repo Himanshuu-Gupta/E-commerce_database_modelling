@@ -143,7 +143,7 @@ public class StoreDao {
 
 	/* Transfers the x quantity of product from Store to Warehouse inventory */
 	public void returnStoreToWarehouse(Integer storeId, Integer productId, Integer quantity) {
-		TransactionStatus status = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+		TransactionStatus checkpoint = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
 		List<StoreInventory> res = new ArrayList<>();
 
 		String sql2 = " SELECT max(TRANSACTION_ID) as TRANSACTION_ID FROM WAREHOUSE_TRANSACTION WT INNER JOIN STORE_INVENTORY SI "
@@ -192,11 +192,11 @@ public class StoreDao {
 				throw new Exception("More quantity returned than that present in store.");
 			}
 			
-			platformTransactionManager.commit(status);
+			platformTransactionManager.commit(checkpoint);
 			System.out.println("Transaction committed successfully!");
 			
 		} catch (Exception e) {
-			platformTransactionManager.rollback(status);
+			platformTransactionManager.rollback(checkpoint);
 			System.out.println("Error in transaction! Rolling back!");
 		} finally {
 			System.out.println("Remaining stock in store: "+ this.getStoreProductQuantity(storeId, productId));
