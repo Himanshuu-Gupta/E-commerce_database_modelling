@@ -143,8 +143,7 @@ public class StoreMenu {
 		System.out.print("Enter quantity for return: ");
 		Integer quantity = scan.nextInt();
 		
-		List<StoreInventory> stores = storeDao.returnStoreToWarehouse(storeId, productId, quantity);
-		System.out.println(stores);
+		storeDao.returnStoreToWarehouse(storeId, productId, quantity);
 	}
 	
 	
