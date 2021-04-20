@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import edu.ncsu.projects.dbms2.entity.AddRenewMembership;
 import edu.ncsu.projects.dbms2.entity.CancelMembership;
@@ -170,8 +171,8 @@ public class MemberDao {
 	
 	/**
 	 * Completely remove the member record from MEMBERS table.
-	 * @param memberId
-	 * @return
+	 * @param memberId 
+	 * @return 
 	 */
 	public int removeFromDb(Integer memberId) {
 		String sql = " DELETE FROM MEMBERS WHERE MEMBER_ID = ? ";
@@ -181,8 +182,8 @@ public class MemberDao {
 	
 	/**
 	 * Get all transactions made by a particular member.
-	 * @param memberId
-	 * @return
+	 * @param memberId Member ID
+	 * @return List of Member Transactions
 	 */
 	public List<MemberTransaction> getMemberTransactions(Integer memberId) {
 		String sql = " SELECT * FROM MEMBER_TRANSACTIONS WHERE MEMBER_ID = ? ";
@@ -192,7 +193,7 @@ public class MemberDao {
 	
 	/**
 	 * Get transaction details of a particular member transaction.
-	 * @param transactionId
+	 * @param transactionId 
 	 * @return
 	 */
 	public List<MemberTransactionsInvolve> getMemberTransactionDetails(Integer transactionId) {
@@ -214,8 +215,8 @@ public class MemberDao {
 	
 	/**
 	 * Add a new row to MEMBER_TRANSACTION table.
-	 * @param transaction
-	 * @return
+	 * @param transaction Member Transaction
+	 * @return 
 	 */
 	public Integer addMemberTransaction(MemberTransaction transaction) {
 		String addTransaction = " INSERT INTO MEMBER_TRANSACTIONS VALUES (null, ? ,? ,? ,? ,?) ";

@@ -1,12 +1,19 @@
 package edu.ncsu.projects.dbms2.menu;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import edu.ncsu.projects.dbms2.dao.DiscountDao;
 import edu.ncsu.projects.dbms2.dao.MemberDao;
@@ -22,6 +29,12 @@ import edu.ncsu.projects.dbms2.entity.MemberTransactionsInvolve;
 public class MembersMenu {
 	private final List<String> menuList = new ArrayList<>();
 	private static Scanner scan = new Scanner(System.in);
+
+	@Autowired
+	private PlatformTransactionManager platformTransactionManager;
+	
+	@Autowired
+	private DataSource ds;
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -130,36 +143,61 @@ public class MembersMenu {
 	 * @param transactionType ORDER/RETURN
 	 */
 	private void addMemberTransaction(String transactionType) {
-		System.out.println("Enter member ID: ");
-		Integer memberId = scan.nextInt();
 		
-		System.out.println("Enter cashier ID: ");
-		Integer cashierId = scan.nextInt();
+		TransactionStatus status = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
 		
-		System.out.println("Enter store ID: ");
-		Integer storeId = scan.nextInt();
+		try {
+			System.out.println("Enter member ID: ");
+			Integer memberId = scan.nextInt();
+			
+			System.out.println("Enter cashier ID: ");
+			Integer cashierId = scan.nextInt();
+			
+			System.out.println("Enter store ID: ");
+			Integer storeId = scan.nextInt();
+			
+			MemberTransaction transaction = new MemberTransaction();
+			transaction.setCashierId(cashierId);
+			transaction.setMemberId(memberId);
+			transaction.setStoreId(storeId);
+			transaction.setTransactionDate(new Date(System.currentTimeMillis()));
+			transaction.setTransactionType(transactionType);
+			
+			Integer transactionId = memberDao.addMemberTransaction(transaction);
+			
+			System.out.println("Added transaction with transaction ID: "+ transactionId);
+			
+			this.addTransactionDetails(transactionId, storeId);
+			
+			System.out.println("Entered the transaction successfully!");
+			
+			platformTransactionManager.commit(status);
 		
-		MemberTransaction transaction = new MemberTransaction();
-		transaction.setCashierId(cashierId);
-		transaction.setMemberId(memberId);
-		transaction.setStoreId(storeId);
-		transaction.setTransactionDate(new Date(System.currentTimeMillis()));
-		transaction.setTransactionType(transactionType);
+		} catch (Exception e) {
+			platformTransactionManager.rollback(status);
+			System.out.println("Error! Rolling back transaction!");
+		}
+	}
+	
+	private void addTransactionDetails(Integer transactionId, Integer storeId) throws Exception {
+		System.out.println("Enter number of products involved: ");
+		int productCount = scan.nextInt();
 		
-		Integer transactionId = memberDao.addMemberTransaction(transaction);
+		if (productCount < 1) {
+			throw new Exception("Cannot involve less than 1 product!");
+		}
 		
-		System.out.println("Added transaction with transaction ID: "+ transactionId);
+		List<MemberTransactionsInvolve> transactionDetailsList = new ArrayList<>();
 		
-		System.out.println("Enter number of products returned: ");
-		int returnCount = scan.nextInt();
-		
-		List<MemberTransactionsInvolve> transactionDetailsList = new ArrayList<>(); 
-		for (int i=0; i<returnCount; i++) {
+		for (int i=0; i<productCount; i++) {
 			System.out.println("Enter product ID for product "+ (i+1) +": ");
 			Integer productId = scan.nextInt();
 			
 			System.out.println("Enter return quantity for product "+ (i+1) +": ");
 			Integer quantity = scan.nextInt();
+			if (quantity < 1) {
+				throw new Exception("Cannot involve less than 1 product!");
+			}
 			
 			MemberTransactionsInvolve details = new MemberTransactionsInvolve();
 			details.setTransactionId(transactionId);
@@ -181,8 +219,6 @@ public class MembersMenu {
 		}
 		
 		memberDao.addMemberTransactionDetails(transactionDetailsList);
-		
-		System.out.println("Entered the transaction successfully!");
 	}
 	
 	/**
