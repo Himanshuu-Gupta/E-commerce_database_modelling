@@ -9,12 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class StoreInventory {
 	private Integer productId;
+	private Integer storeId;
 	private String productName;
+	private Double price;
 	private Integer stockQuantity;
 	private Date productionDate;
 	private Date expirationDate;
-	private Integer storeId;
-	private Double price;
+	
 	public Integer getProductId() {
 		return productId;
 	}
