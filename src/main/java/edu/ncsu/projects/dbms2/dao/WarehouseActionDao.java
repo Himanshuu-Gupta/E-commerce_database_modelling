@@ -111,7 +111,7 @@ public class WarehouseActionDao{
 	 * @param Transactiondate - Date of the transaction we are receiving the product into inventory
 	 * @return The number of the products added into the inventory 
 	 */
-	public int addWarehouseTransaction(Integer productId, Integer supplierId, Integer warehouseOperatorID, Integer Stock, Integer Price, Date productionDate, Date expDate, String Product_name, Date Transactiondate) {
+	public int addWarehouseTransaction(Integer productId, Integer supplierId, Integer warehouseOperatorID, Integer Stock, Double Price, Date productionDate, Date expDate, String Product_name, Date Transactiondate, Double BuyPrice) {
 		String sql = "Insert into ORDER_AND_RETURN_STOCKS VALUES (?,?,?,?,?)";
 		jdbcTemplate.update(sql, new PreparedStatementSetter() {
 			
@@ -128,7 +128,7 @@ public class WarehouseActionDao{
 		String sql3 = "SELECT MAX(TRANSACTION_ID) FROM ORDER_AND_RETURN_STOCKS WHERE PRODUCT_ID = ? ";
 		Integer transactionID = jdbcTemplate.queryForObject(sql3, Integer.class , productId);
 		
-		String sql1 = "Insert into WAREHOUSE_TRANSACTION VALUES (?,?,?,?,?,?,?,?,?)";
+		String sql1 = "Insert into WAREHOUSE_TRANSACTION VALUES (?,?,?,?,?,?,?,?,?,?)";
 		jdbcTemplate.update(sql1, new PreparedStatementSetter() {
 			
 			@Override
@@ -137,11 +137,12 @@ public class WarehouseActionDao{
 				ps.setInt(2, productId);
 				ps.setInt(3, supplierId);
 				ps.setInt(4, Stock);
-				ps.setInt(5, Price);
+				ps.setDouble(5, Price);
 				ps.setDate(6, productionDate);
 				ps.setDate(7, expDate);
 				ps.setString(8, Product_name);
 				ps.setDate(9, Transactiondate);
+				ps.setDouble(10, BuyPrice);
 			}
 		});
 		

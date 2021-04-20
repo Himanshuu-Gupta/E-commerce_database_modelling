@@ -18,6 +18,7 @@ public class WarehouseTransaction {
 	private Date expirationDate;
 	private String productName;
 	private Date transactionDate;
+	private Double BuyingPrice;
 	
 	public Integer getTransactionId() {
 		return transactionId;
@@ -48,6 +49,12 @@ public class WarehouseTransaction {
 	}
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	public Double getBuyingPrice() {
+		return BuyingPrice;
+	}
+	public void setBuyingPrice(Double buyprice) {
+		this.BuyingPrice = buyprice;
 	}
 	public Date getProductionDate() {
 		return productionDate;

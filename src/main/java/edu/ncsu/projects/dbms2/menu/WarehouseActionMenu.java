@@ -92,8 +92,11 @@ public class WarehouseActionMenu {
 		System.out.println("Enter the Quantity of the product we received: ");
 		Integer quantity = scan.nextInt();
 		
-		System.out.println("Enter the price of the product: ");
-		Integer price = scan.nextInt();
+		System.out.println("Enter the Buying price of the product: ");
+		Double buyprice = scan.nextDouble();
+		
+		System.out.println("Enter the Market price of the product: ");
+		Double price = scan.nextDouble();
 		
 		System.out.println("Enter the production Date of the product in (YYYY-MM-DD) format : ");
 		String prodate = scan.next();
@@ -106,7 +109,7 @@ public class WarehouseActionMenu {
 		long millis=System.currentTimeMillis();  
         java.sql.Date tdate = new java.sql.Date(millis);
 		
-		int added = WarehouseActionDao.addWarehouseTransaction(productId, supplierId, warehouseId, quantity, price, proddate, expidate, productname, tdate);
+		int added = WarehouseActionDao.addWarehouseTransaction(productId, supplierId, warehouseId, quantity, price, proddate, expidate, productname, tdate, buyprice);
 		
 		System.out.println("New Transacation Recorded for product - "+ productId);
 	}

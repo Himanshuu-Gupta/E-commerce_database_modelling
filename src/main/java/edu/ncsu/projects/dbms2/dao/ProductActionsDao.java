@@ -28,7 +28,7 @@ public class ProductActionsDao {
 	public int updateByAttribute(String attributeName, Object attributeValue, Integer productID) {
 		
 		String sql1 = " UPDATE STORE_INVENTORY SET "+ attributeName +" = ? WHERE PRODUCT_ID = ? ";
-		String sql2 = " UPDATE WAREHOUSE_INVENTORY SET "+ attributeName +" = ? WHERE PRODUCT_ID = ? ";
+		String sql2 = " UPDATE WAREHOUSE_TRANSACTION SET "+ attributeName +" = ? WHERE PRODUCT_ID = ? ";
 		
 		Integer rows1 =  jdbcTemplate.update(sql1, new PreparedStatementSetter() {
 			
@@ -47,6 +47,21 @@ public class ProductActionsDao {
 				ps.setInt(2, productID);
 			}
 		});
+		
+		if(attributeName.equals("product_name")  || attributeName.equals("PRODUCT_NAME") ){
+			String sql5 = " UPDATE WAREHOUSE_INVENTORY SET "+ attributeName +" = ? WHERE PRODUCT_ID = ? ";
+			
+			Integer rows3 = jdbcTemplate.update(sql5, new PreparedStatementSetter() {
+				
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setObject(1, attributeValue);
+					ps.setInt(2, productID);
+				}
+			});
+			
+			rows2 = rows2 + rows3;
+		}
 		
 		String sql3 = " SELECT * FROM STORE_INVENTORY WHERE PRODUCT_ID = ? ";
 		String sql4 = " SELECT * FROM WAREHOUSE_TRANSACTION WHERE PRODUCT_ID = ? ";
