@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class MemberTransactionsInvolve {
 	private Integer transactionId;
 	private Integer productId;
-	private Double price;
 	private Double totalPrice;
 	private Integer productQuantity;
 	private Integer discountId;
@@ -25,12 +24,6 @@ public class MemberTransactionsInvolve {
 	}
 	public void setProductId(Integer productId) {
 		this.productId = productId;
-	}
-	public Double getPrice() {
-		return price;
-	}
-	public void setPrice(Double price) {
-		this.price = price;
 	}
 	public Double getTotalPrice() {
 		return totalPrice;

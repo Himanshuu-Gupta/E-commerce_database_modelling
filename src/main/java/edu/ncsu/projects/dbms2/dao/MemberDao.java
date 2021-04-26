@@ -250,7 +250,7 @@ public class MemberDao {
 	 */
 	public int addMemberTransactionDetails(List<MemberTransactionsInvolve> transactionDetails) {
 		
-		String involveSql = " INSERT INTO MEMBER_TRANSACTIONS_INVOLVE VALUES (? ,? ,? ,? ,? ,? ,?) ";
+		String involveSql = " INSERT INTO MEMBER_TRANSACTIONS_INVOLVE VALUES (? ,? ,? ,? ,? ,?) ";
 		
 		jdbcTemplate.batchUpdate(involveSql, new BatchPreparedStatementSetter() {
 			
@@ -261,8 +261,8 @@ public class MemberDao {
 				ps.setInt(3, transactionDetails.get(i).getStoreId());
 				ps.setInt(4, transactionDetails.get(i).getProductQuantity());
 				ps.setInt(5, transactionDetails.get(i).getDiscountId());
-				ps.setDouble(6, transactionDetails.get(i).getPrice());
-				ps.setDouble(7, transactionDetails.get(i).getTotalPrice());
+				// ps.setDouble(6, transactionDetails.get(i).getPrice());
+				ps.setDouble(6, transactionDetails.get(i).getTotalPrice());
 			}
 			
 			@Override

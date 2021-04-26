@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class AllCustomerBills {
 	private Integer memberId;
 	private Date transactionDate;
-	private Double transactionPrice;
+	private Double totalPrice;
 	
 	
 	public Integer getMemberId() {
@@ -26,10 +26,10 @@ public class AllCustomerBills {
 		this.transactionDate = transactionDate;
 	}
 	public Double getTransactionPrice() {
-		return transactionPrice;
+		return totalPrice;
 	}
 	public void setTransactionPrice(Double transactionPrice) {
-		this.transactionPrice = transactionPrice;
+		this.totalPrice = transactionPrice;
 	}
 	
 	@Override

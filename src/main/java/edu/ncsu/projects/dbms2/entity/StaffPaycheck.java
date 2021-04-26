@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StaffPaycheck {
 	private Integer checkNumber;
-	private Integer billingStaffId;
+	private Integer billingstaff_Id;
 	private Integer staffId;
 	private Date checkDate;
 	private Double amount;
@@ -21,10 +21,10 @@ public class StaffPaycheck {
 		this.checkNumber = checkNumber;
 	}
 	public Integer getBillingStaffId() {
-		return billingStaffId;
+		return billingstaff_Id;
 	}
 	public void setBillingStaffId(Integer billingStaffId) {
-		this.billingStaffId = billingStaffId;
+		this.billingstaff_Id = billingStaffId;
 	}
 	public Integer getStaffId() {
 		return staffId;

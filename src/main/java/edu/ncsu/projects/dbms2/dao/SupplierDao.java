@@ -18,12 +18,22 @@ public class SupplierDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
+	/**
+	 * The API lists all supplier details for our warehouse
+	 * @return List of all suppliers
+	 */
 	public List<Supplier> findAll() {
 		String sql = " SELECT * FROM SUPPLIERS ";
 		
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Supplier>(Supplier.class));
 	}
 	
+	/**
+	 * The API fetches details for a particular supplier based on the attribute value
+	 * @param attributeName  - Name of the attribute on which we have to filter
+	 * @param attributeValue - Value of the attribute
+	 * @return
+	 */
 	public List<Supplier> findByAttribute(String attributeName, Object attributeValue) {
 		String sql = " SELECT * FROM SUPPLIERS WHERE "+ attributeName +" = ? ";
 		
@@ -32,6 +42,11 @@ public class SupplierDao {
 		return suppliers;
 	}
 	
+	/**
+	 * Add new supplier to the Warehouse
+	 * @param supplier - Supplier details
+	 * @return 
+	 */
 	public int addSupplier(Supplier supplier) {
 		String sql = " INSERT INTO SUPPLIERS VALUES (null, ?, ?, ?, ?, ?) ";
 		
@@ -48,6 +63,13 @@ public class SupplierDao {
 		});
 	}
 	
+	/**
+	 * Update a Supplier row by the given attribute name and value.
+	 * @param attributeName
+	 * @param attributeValue
+	 * @param supplierId
+	 * @return Number of rows updated.
+	 */
 	public int updateByAttribute(String attributeName, Object attributeValue, Integer supplierId) {
 		String sql = " UPDATE SUPPLIERS SET "+ attributeName +" = ? WHERE SUPPLIER_ID = ? ";
 		
@@ -61,12 +83,22 @@ public class SupplierDao {
 		});
 	}
 	
+	/**
+	 * Delete a supplier by setting their active status to false.
+	 * @param supplierId
+	 * @return Number of rows updated.
+	 */
 	public int deleteSupplier(Integer supplierId) {
 		String sql = " UPDATE SUPPLIERS SET ACTIVE_STATUS = false WHERE SUPPLIER_ID = ? ";
 		
 		return jdbcTemplate.update(sql, supplierId);
 	}
 	
+	/**
+	 * Remove a supplier row from the SUPPLIERS table
+	 * @param supplierId
+	 * @return number of rows deleted.
+	 */
 	public int removeFromDb(Integer supplierId) {
 		String sql = " DELETE FROM SUPPLIERS WHERE SUPPLIER_ID = ? ";
 		

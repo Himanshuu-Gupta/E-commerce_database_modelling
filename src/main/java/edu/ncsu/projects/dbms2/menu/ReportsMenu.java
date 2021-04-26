@@ -32,7 +32,8 @@ public class ReportsMenu {
 		menuList.add("Customer growth report by month");
 		menuList.add("Customer growth report by year");
 		menuList.add("Customer activity report for a period");
-
+		menuList.add("Merchandise Store Inventory per product");
+		menuList.add("Go Back");
 	}
 	
 	private void executeAction(int choice) {
@@ -61,6 +62,9 @@ public class ReportsMenu {
 			break;
 		case 8:
 			customerActivityReport();
+			break;
+		case 9:
+			merchandiseStoreInventoryPerProduct();
 			break;
 		
 		default:
@@ -152,6 +156,14 @@ public class ReportsMenu {
 		printReport(report);
 	}
 	
+	private void merchandiseStoreInventoryPerProduct() {
+		System.out.println("Enter product id for store report:");
+		Integer productId = scan.nextInt();
+		
+		List<Map<String, Object>> report = reportsDao.merchStoreReportPerProduct(productId);
+		printReport(report);
+	}
+	
 	/**
 	 * Method to get monthly customer membership report in a given time range.
 	 */
@@ -206,7 +218,7 @@ public class ReportsMenu {
 			System.out.print("Enter choice: ");
 			int choice = scan.nextInt();
 			
-			if (choice == menuList.size()) {
+			if (choice == menuList.size()+1) {
 				break;
 			}
 			

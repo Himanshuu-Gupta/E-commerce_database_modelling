@@ -98,6 +98,13 @@ public class WarehouseActionDao{
 		
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<WarehouseInventory>(WarehouseInventory.class));
 	}
+	
+	public void printWarehouseTransactions() {
+		String sql3 = " SELECT * FROM WAREHOUSE_TRANSACTION ";
+		
+		System.out.println(jdbcTemplate.queryForList(sql3));
+	}
+	
 	/**
 	 * addWarehouseTransaction handles the request to add any new product coming in our inventory.
 	 * @param productId - Id of the new incoming product
@@ -157,6 +164,8 @@ public class WarehouseActionDao{
 				ps.setInt(4, Stock);
 			}
 		});
+		
+		
 	}
 	
 }

@@ -27,16 +27,16 @@ public class BillingDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	public List<MemberReward> rewardChecks(){
+	public void rewardChecks(){
 		String sql = " SELECT * FROM MEMBER_REWARDS ";
-		
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<MemberReward>(MemberReward.class));
+		System.out.println(jdbcTemplate.queryForList(sql));
+
 	}
 	
 	
 	/*Generate rewards for given customer basis transactions for given transaction year.*/
-	public List<MemberReward> generateMemberRewards(Integer memberId, Integer billingStaffId, Integer year){
-		String sql = " SELECT MEMBER_ID, (TOTAL_TRANSACTION_AMOUNT* CASHBACK_REWARD) AS CASHBACK  "
+	public void generateMemberRewards(Integer memberId, Integer billingStaffId, Integer year){
+		String sql = " SELECT (TOTAL_TRANSACTION_AMOUNT* CASHBACK_REWARD_PERCENT) AS CASHBACK  "
 				+ " FROM(SELECT MT.MEMBER_ID,MEMBERSHIP_LEVEL,SUM(TOTAL_PRICE) AS TOTAL_TRANSACTION_AMOUNT FROM "
 				+ " MEMBER_TRANSACTIONS_INVOLVE MTI "
 				+ " INNER JOIN MEMBER_TRANSACTIONS MT "
@@ -54,26 +54,26 @@ public class BillingDao {
 		
 		float rewardAmount = jdbcTemplate.queryForObject(sql, Float.class);
 		
-		String sql2 = "INSERT INTO MEMBER_REWARDS VALUES (null,"+billingStaffId+","+memberId+","+rewardAmount+",SYSDATE();";
+		String sql2 = "INSERT INTO MEMBER_REWARDS VALUES (null,"+billingStaffId+","+memberId+","+rewardAmount+",SYSDATE())";
 		
 		jdbcTemplate.update(sql2);
 		
 		String sql3 = "SELECT * FROM MEMBER_REWARDS";
-		return jdbcTemplate.query(sql3, new BeanPropertyRowMapper<MemberReward>(MemberReward.class));
+		
+		System.out.println(jdbcTemplate.queryForList(sql3));
+
+//		return jdbcTemplate.query(sql3, new BeanPropertyRowMapper<MemberReward>(MemberReward.class));
 	
 	}
 	
 	
 	/*Generate rewards for given customer basis transactions for given transaction year.*/
-	public List<MemberReward> rewardChecksForMemberId(Integer memberId){
+	public void rewardChecksForMemberId(Integer memberId){
 		String sql = " SELECT * FROM MEMBER_REWARDS WHERE MEMBER_ID ="+ memberId;
 		
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<MemberReward>(MemberReward.class));
+		System.out.println(jdbcTemplate.queryForList(sql));
+//		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<MemberReward>(MemberReward.class));
 	}
-	
-	
-	
-	
 	
 	/*Get bills for all the suppliers basis existing transactions*/
 	public  void supplierBills() {
@@ -98,28 +98,44 @@ public class BillingDao {
 	}
 	
 	/*Get bills for a specific supplier id basis existing transactions*/
-	public List<WarehouseTransaction> supplierBillsById(Integer supplierId) {
+	public void supplierBillsById(Integer supplierId) {
 		String sql = " SELECT TRANSACTION_ID, TRANSACTION_DATE, SUPPLIER_ID, SUM(BUY_PRICE*STOCK_BOUGHT) AS TOTAL_PRICE "
 				+ " FROM WAREHOUSE_TRANSACTION "
 				+ " WHERE SUPPLIER_ID ="+supplierId
 				+ " GROUP BY TRANSACTION_ID, TRANSACTION_DATE, SUPPLIER_ID";
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<WarehouseTransaction>(WarehouseTransaction.class));
+				
+		jdbcTemplate.query(sql, new RowCallbackHandler() {
+
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				System.out.println("TRANSACTION_ID :: TRANSACTION_DATE :: SUPPLIER_ID :: TOTAL_PRICE");
+
+				while (rs.next()) {
+					System.out.println(rs.getInt("TRANSACTION_ID") + " :: " + rs.getDate("TRANSACTION_DATE") + " :: " + rs.getInt("SUPPLIER_ID") + " :: " + rs.getDouble("TOTAL_PRICE"));
+				}
+			}
+		});
+//		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<WarehouseTransaction>(WarehouseTransaction.class));
 		
 	}
 	
 	/*Fetch paycheck details for all the staff members*/
-	public List<StaffPaycheck> paychecks() {		
+	public void paychecks() {		
 		String sql = " SELECT * FROM STAFF_PAYCHECKS ";
 		
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<StaffPaycheck>(StaffPaycheck.class));
+		System.out.println(jdbcTemplate.queryForList(sql));
+		
+		// return jdbcTemplate.query(sql, new BeanPropertyRowMapper<StaffPaycheck>(StaffPaycheck.class));
 		
 	}
 	
 	/*Fetch paycheck details for a given staff member*/
-	public List<StaffPaycheck> paychecksById(Integer staffId) {		
+	public void paychecksById(Integer staffId) {		
 		String sql = " SELECT * FROM STAFF_PAYCHECKS WHERE STAFF_ID = "+staffId;
 		
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<StaffPaycheck>(StaffPaycheck.class));
+		System.out.println(jdbcTemplate.queryForList(sql));
+		
+		// return jdbcTemplate.query(sql, new BeanPropertyRowMapper<StaffPaycheck>(StaffPaycheck.class));
 		
 	}
 	
@@ -138,24 +154,25 @@ public class BillingDao {
 	}
 	
 	/*Get customer bills generated for all the transactions for any store*/	
-	public List<AllCustomerBills> allCustomerTransactions() {
+	public void allCustomerTransactions() {
 		String sql = " SELECT MEMBER_ID, TRANSACTION_DATE, SUM(TOTAL_PRICE) AS TOTAL_PRICE "
 				+ " FROM MEMBER_TRANSACTIONS_INVOLVE MTI "
 				+ " INNER JOIN MEMBER_TRANSACTIONS MI "
 				+ " ON MTI.TRANSACTION_ID = MI.TRANSACTION_ID "
-				+ " GROUP BY MEMBER_ID, TRANSACTION_DATE;";
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<AllCustomerBills>(AllCustomerBills.class));
+				+ " GROUP BY MEMBER_ID, TRANSACTION_DATE ";
+		
+		System.out.println(jdbcTemplate.queryForList(sql));
+		
+		// return jdbcTemplate.query(sql, new BeanPropertyRowMapper<AllCustomerBills>(AllCustomerBills.class));
 		
 	}
 	
 	/*Generate paycheck for specific staff member*/
-	public List<StaffPaycheck> generateSaffPaychecks(Integer staffId,Integer acStaffId, Double amount) {
+	public void generateSaffPaychecks(Integer staffId,Integer acStaffId, Double amount) {
 		String sql = " INSERT INTO STAFF_PAYCHECKS VALUES (null,"+acStaffId+","+staffId+",SYSDATE(),"+amount+");";
 		jdbcTemplate.update(sql);
 		
-		String sql2 = " SELECT * FROM STAFF_PAYCHECKS;"; 
-		return jdbcTemplate.query(sql2, new BeanPropertyRowMapper<StaffPaycheck>(StaffPaycheck.class)); 
-			
+		this.paychecks();
 	}
 	
 

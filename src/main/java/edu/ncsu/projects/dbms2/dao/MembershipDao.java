@@ -10,6 +10,11 @@ public class MembershipDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	/**
+	 * Gives the duration in months for mentioned membership level
+	 * @param membershipLevel
+	 * @return duration for the selected membership level e.g. 12 months
+	 */
 	public Double getMembershipDurationInMonths(String membershipLevel) {
 		String sql = " SELECT DURATION_MONTHS FROM MEMBERSHIPS WHERE MEMBERSHIP_LEVEL = ? ";
 		

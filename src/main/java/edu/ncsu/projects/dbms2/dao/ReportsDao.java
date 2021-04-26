@@ -87,6 +87,12 @@ public class ReportsDao {
 		return jdbcTemplate.queryForList(sql, new Object[] {storeId}, new int[] {Types.INTEGER});
 	}
 	
+	public List<Map<String, Object>> merchStoreReportPerProduct(Integer productId) {
+		String sql = " SELECT * FROM STORE_INVENTORY WHERE PRODUCT_ID = ? ";
+		
+		return jdbcTemplate.queryForList(sql, new Object[] {productId}, new int[] {Types.INTEGER});
+	}
+	
 	/**
 	 * Report to view the monthly customer memberships in the entire chain.
 	 * @param fromDate From Date
@@ -94,8 +100,8 @@ public class ReportsDao {
 	 * @return
 	 */
 	public List<Map<String, Object>> monthlyCustomerGrowthReport(Date fromDate, Date toDate) {
-		String sql = " SELECT YEAR(STARTUP_DATE) AS SIGNUP_YEAR, MONTH(STARTUP_DATE) AS SIGNUP_MONTH, COUNT(DISTINCT MEMBER_ID) AS CUSTOMERS "
-				+ " FROM ADD_RENEW_MEMBERSHIPS WHERE STARTUP_DATE >= ? AND STARTUP_DATE <= ? "
+		String sql = " SELECT YEAR(START_DATE) AS SIGNUP_YEAR, MONTH(START_DATE) AS SIGNUP_MONTH, COUNT(DISTINCT MEMBER_ID) AS CUSTOMERS "
+				+ " FROM ADD_RENEW_MEMBERSHIPS WHERE START_DATE >= ? AND START_DATE <= ? "
 				+ " GROUP BY SIGNUP_YEAR, SIGNUP_MONTH ";
 		
 		return jdbcTemplate.queryForList(sql, new Object[] {fromDate, toDate}, new int[] {Types.DATE, Types.DATE});
@@ -108,8 +114,8 @@ public class ReportsDao {
 	 * @return
 	 */
 	public List<Map<String,Object>> yearlyCustomerGrowthReport(Date fromDate, Date toDate) {
-		String sql = " SELECT YEAR(STARTUP_DATE) AS SIGNUP_YEAR, COUNT(DISTINCT MEMBER_ID) AS CUSTOMERS "
-				+ " FROM ADD_RENEW_MEMBERSHIPS WHERE STARTUP_DATE >= ? AND STARTUP_DATE <= ? "
+		String sql = " SELECT YEAR(START_DATE) AS SIGNUP_YEAR, COUNT(DISTINCT MEMBER_ID) AS CUSTOMERS "
+				+ " FROM ADD_RENEW_MEMBERSHIPS WHERE START_DATE >= ? AND START_DATE <= ? "
 				+ " GROUP BY SIGNUP_YEAR ";
 		
 		return jdbcTemplate.queryForList(sql, new Object[] {fromDate, toDate}, new int[] {Types.DATE, Types.DATE});

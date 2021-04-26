@@ -56,6 +56,10 @@ public class MainMenu {
 		menuList.add("Exit");
 	}
 	
+	/**
+	 * The API will trigger the desired function based on user choice
+	 * @param choice
+	 */
 	@EventListener(ApplicationReadyEvent.class)
 	public void loadMenu() {
 		while (true) {

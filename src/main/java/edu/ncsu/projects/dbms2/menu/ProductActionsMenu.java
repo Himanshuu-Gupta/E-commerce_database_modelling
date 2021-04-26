@@ -21,6 +21,8 @@ public class ProductActionsMenu {
 	 */
 	public ProductActionsMenu() {
 		productActions.add("Update Product");
+		productActions.add("Delete Product");
+		productActions.add("Go Back");
 	}
 	
 	/**
@@ -31,6 +33,9 @@ public class ProductActionsMenu {
 		switch(choice) {
 		case 1: 
 			updateByAttribute();
+			break;
+		case 2: 
+			deletebyattribute();
 			break;
 		default:
 			System.out.println("Invalid Choice");
@@ -59,6 +64,19 @@ public class ProductActionsMenu {
 	}
 	
 	/**
+	 *	Driver to delete the product based on Product id
+	 */
+	private void deletebyattribute() {
+		
+		System.out.println("Enter product ID to delete: ");
+		Integer productID = scan.nextInt();
+		
+		
+		productActionsDao.deleteproduct(productID);
+		
+	}
+	
+	/**
 	 * Driver to load the menu screen for staff
 	 */
 	public void loadMenu() {
@@ -68,7 +86,7 @@ public class ProductActionsMenu {
 			System.out.print("Enter choice: ");
 			int choice = scan.nextInt();
 			
-			if (choice == productActions.size()+1) {
+			if (choice == productActions.size()) {
 				break;
 			}
 			

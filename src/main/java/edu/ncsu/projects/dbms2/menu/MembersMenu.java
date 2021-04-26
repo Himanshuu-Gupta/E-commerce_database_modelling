@@ -144,7 +144,7 @@ public class MembersMenu {
 	 */
 	private void addMemberTransaction(String transactionType) {
 		
-		TransactionStatus checkpoint = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+		TransactionStatus checkpoint = platformTransactionManager.getTransaction(new DefaultTransactionDefinition()); // set a checkpoint using PlatformTransactionManager class
 		
 		try {
 			System.out.println("Enter member ID: ");
@@ -171,10 +171,10 @@ public class MembersMenu {
 			
 			System.out.println("Entered the transaction successfully!");
 			
-			platformTransactionManager.commit(checkpoint);
+			platformTransactionManager.commit(checkpoint);	// commit the previous updates to the DB
 		
 		} catch (Exception e) {
-			platformTransactionManager.rollback(checkpoint);
+			platformTransactionManager.rollback(checkpoint);	// rollback on error
 			System.out.println("Error! Rolling back transaction!");
 		}
 	}
@@ -208,12 +208,12 @@ public class MembersMenu {
 			details.setDiscountId(discountDao.getStoreProductDiscount(storeId, productId));
 			
 			Double storeProductPrice = productDao.getStoreProductPrice(productId, storeId);
-			details.setPrice(storeProductPrice);
+			// details.setPrice(storeProductPrice);
 			
 			Double storeProductDiscountPercent = discountDao.getStoreProductDiscountPercent(storeId, productId);
 			
 			Double discountedStoreProductPrice = storeProductPrice - (storeProductPrice * storeProductDiscountPercent / 100);
-			details.setTotalPrice(discountedStoreProductPrice);
+			details.setTotalPrice(discountedStoreProductPrice * quantity);
 			
 			transactionDetailsList.add(details);
 		}

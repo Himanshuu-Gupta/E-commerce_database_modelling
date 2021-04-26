@@ -110,6 +110,7 @@ public class WarehouseActionMenu {
         java.sql.Date tdate = new java.sql.Date(millis);
 		
 		int added = WarehouseActionDao.addWarehouseTransaction(productId, supplierId, warehouseId, quantity, price, proddate, expidate, productname, tdate, buyprice);
+		WarehouseActionDao.printWarehouseTransactions();
 		
 		System.out.println("New Transacation Recorded for product - "+ productId);
 	}

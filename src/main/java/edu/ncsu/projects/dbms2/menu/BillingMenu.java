@@ -77,9 +77,9 @@ public class BillingMenu {
 	/* The method returns the already generated paychecks for all staff members */
 	private void getAllSaffPaychecks() {
 		
-		List<StaffPaycheck> paychecks = billingDao.paychecks();
+		billingDao.paychecks();
 		
-		System.out.println(paychecks);
+		// System.out.println(paychecks);
 		}
 	
 	
@@ -89,9 +89,9 @@ public class BillingMenu {
 		System.out.println("Enter staff ID to fetch paycheck: ");
 		Integer staffId = scan.nextInt();
 		
-		List<StaffPaycheck> paychecks = billingDao.paychecksById(staffId);
+		billingDao.paychecksById(staffId);
 		
-		System.out.println(paychecks);
+		// System.out.println(paychecks);
 	}
 	
 	/*Get bills for all the suppliers basis existing transactions*/
@@ -105,15 +105,13 @@ public class BillingMenu {
 		System.out.println("Enter supplier ID to fetch bills: ");
 		Integer supplierId = scan.nextInt();
 		
-		List<WarehouseTransaction> supplierBills = billingDao.supplierBillsById(supplierId);
-		System.out.println(supplierBills);
+		billingDao.supplierBillsById(supplierId);
 	}
 	
 	/*Get customer bills generated for all the transactions for any store*/	
 	private void getAllCustomerBills() {
-		List<AllCustomerBills> allcustomerTransactions = billingDao.allCustomerTransactions();
-		System.out.println(allcustomerTransactions);
-		
+		billingDao.allCustomerTransactions();
+		// System.out.println(allcustomerTransactions);
 	}
 	
 	/*Get customer bills generated for all the transactions for any store for a specific customer*/
@@ -132,8 +130,7 @@ public class BillingMenu {
 	
 	/*Get already generated reward details for all customers*/
 	private void getCustomerRewardDetails() {
-		List<MemberReward> rewards = billingDao.rewardChecks();
-		System.out.println(rewards);
+		billingDao.rewardChecks();
 	}
 	
 	/*Get already generated reward details for all customers*/
@@ -141,8 +138,8 @@ public class BillingMenu {
 		System.out.println("Enter customerID: ");
 		Integer memberId = scan.nextInt();
 		
-		List<MemberReward> rewards = billingDao.rewardChecksForMemberId(memberId);
-		System.out.println(rewards);
+		billingDao.rewardChecksForMemberId(memberId);
+//		System.out.println(rewards);
 	}
 
 	/*Generate rewards for given customer for all the transactions in the mentioned year*/
@@ -156,8 +153,7 @@ public class BillingMenu {
 		System.out.println("Enter year for reward generation:");
 		Integer year = scan.nextInt();
 		
-		List<MemberReward> rewards = billingDao.generateMemberRewards(memberId,billingStaffId,year);
-		System.out.println(rewards);
+		billingDao.generateMemberRewards(memberId,billingStaffId,year);
 		
 	}
 	
@@ -172,9 +168,7 @@ public class BillingMenu {
 		System.out.println("Enter amount for paycheck:");
 		Double amount = scan.nextDouble();
 		
-		List<StaffPaycheck> staffPay = billingDao.generateSaffPaychecks(staffId,acStaffId,amount);
-		System.out.println(staffPay);
-		
+		billingDao.generateSaffPaychecks(staffId,acStaffId,amount);
 	}
 	
 	/*Loads the menu options listed at the start of the program for each section*/

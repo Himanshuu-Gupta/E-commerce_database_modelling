@@ -19,6 +19,9 @@ public class DiscountsMenu {
 	@Autowired
 	private DiscountDao discountDao;
 	
+	/**
+	 * List of all menu options for Discount action
+	 */
 	public DiscountsMenu() {
 		menuList.add("View all Discounts");
 		menuList.add("Add new Discount");
@@ -28,6 +31,10 @@ public class DiscountsMenu {
 		menuList.add("Back to Main Menu");
 	}
 	
+	/**
+	 * The API will trigger the desired function based on user choice
+	 * @param choice
+	 */
 	private void executeAction(int choice) {
 		switch(choice) {
 		case 1: 
@@ -50,6 +57,9 @@ public class DiscountsMenu {
 		}
 	}
 	
+	/**
+	 * Trigger function in  DiscountDao to remove the records from the DB
+	 */
 	private void removeRecordFromDb() {
 		System.out.println("Enter discount ID to remove: ");
 		Integer discountId = scan.nextInt(); 
@@ -58,6 +68,9 @@ public class DiscountsMenu {
 		System.out.println("Successfully removed "+ count +" records from DISCOUNT table.");
 	}
 
+	/**
+	 * Trigger function in  DiscountDao to delete the records from the DB
+	 */
 	private void deleteEntity() {
 		System.out.println("Enter discount ID to delete: ");
 		Integer discountId = scan.nextInt();
@@ -66,7 +79,10 @@ public class DiscountsMenu {
 		
 		System.out.println("Deleted "+ deletedDiscount +" rows.");
 	}
-
+	
+	/**
+	 * Trigger function in  DiscountDao to update the discount in the DB
+	 */
 	private void updateEntity() {
 		System.out.println("Enter attribute name: ");
 		String attributeName = scan.next().toUpperCase();
@@ -82,7 +98,10 @@ public class DiscountsMenu {
 		
 		System.out.println("Updated "+ updateCount +" rows in DISCOUNT table.");
 	}
-
+	
+	/**
+	 * Trigger function in  Add new Discount in the DB
+	 */
 	private void addEntity() {
 		Discount discount = new Discount();
 		
@@ -108,7 +127,10 @@ public class DiscountsMenu {
 		int addedEntities = discountDao.addDiscount(discount);
 		System.out.println("Added "+ addedEntities +" rows.");
 	}
-
+	
+	/**
+	 * List all the discount present on the products
+	 */
 	private void getAllEntities() {
 		List<Discount> discounts = discountDao.findAll();
 		
@@ -117,6 +139,9 @@ public class DiscountsMenu {
 		}
 	}
 	
+	/**
+	 * Load the main menu for the discount action
+	 */
 	public void loadMenu() {
 		while (true) {
 			System.out.println();
@@ -137,6 +162,9 @@ public class DiscountsMenu {
 		}
 	}
 	
+	/**
+	 * Print the Menu for the Discount Action
+	 */
 	private void printMenu() {
 		System.out.println("DISCOUNT ACTIONS:");
 		for (int i=0; i<menuList.size(); i++) {

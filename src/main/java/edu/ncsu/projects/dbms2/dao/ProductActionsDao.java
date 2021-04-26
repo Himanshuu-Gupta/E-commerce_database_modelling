@@ -19,6 +19,20 @@ public class ProductActionsDao {
 	JdbcTemplate jdbcTemplate;
 	
 	/**
+	 * Deletes product
+	 * @param productID
+	 */
+	public void deleteproduct(Integer productID) {
+		String sql1 = " DELETE FROM STORE_INVENTORY WHERE PRODUCT_ID = ? ";
+		jdbcTemplate.update(sql1, productID);
+		String sql2 = " DELETE FROM WAREHOUSE_INVENTORY WHERE PRODUCT_ID = ? ";
+		jdbcTemplate.update(sql2, productID);
+		
+		String sql3 = " SELECT * FROM STORE_INVENTORY";
+		System.out.println(jdbcTemplate.queryForList(sql3));
+	}
+	
+	/**
 	 * Update information of a product based on the product id
 	 * @param attributeName
 	 * @param attributeValue

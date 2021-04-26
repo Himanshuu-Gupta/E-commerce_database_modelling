@@ -53,6 +53,9 @@ public class SuppliersMenu {
 		}
 	}
 	
+	/**
+	 * Deletes the mentioned supplier from the table
+	 */
 	private void removeRecordFromDb() {
 		System.out.println("Enter supplier ID to remove: ");
 		Integer supplierId = scan.nextInt(); 
@@ -60,7 +63,10 @@ public class SuppliersMenu {
 		int count = supplierDao.removeFromDb(supplierId);
 		System.out.println("Successfully removed "+ count +" records from SUPPLIERS table.");
 	}
-
+	
+	/**
+	 * Marks the mentioned supplier as inactive
+	 */
 	private void deleteEntity() {
 		System.out.println("Enter supplier ID to delete: ");
 		Integer supplierId = scan.nextInt();
@@ -69,7 +75,11 @@ public class SuppliersMenu {
 		
 		System.out.println("Deleted "+ deletedSupplier +" rows.");
 	}
-
+	
+	/**
+	 * Updates the supplier details for the mentioned attribute name i.e. 
+	 * e.g. to update name attribute name =Supplier_name and attribute_value = New supplier name 
+	 */
 	private void updateEntity() {
 		System.out.println("Enter attribute name: ");
 		String attributeName = scan.next().toUpperCase();
@@ -85,10 +95,14 @@ public class SuppliersMenu {
 		
 		System.out.println("Updated "+ updateCount +" rows in SUPPLIERS table.");
 	}
-
+	
+	/**
+	 * Adds a new supplier info to the table
+	 */
 	private void addEntity() {
 		Supplier supplier = new Supplier();
 		
+		scan.nextLine();
 		System.out.println("Enter Supplier Name: ");
 		supplier.setSupplierName(scan.nextLine());
 		
@@ -108,7 +122,10 @@ public class SuppliersMenu {
 		int addedSuppliers = supplierDao.addSupplier(supplier);
 		System.out.println("Added "+ addedSuppliers +" rows.");
 	}
-
+	
+	/**
+	 * It fetches the supplier details given an primary attribute value
+	 */
 	private void getEntityByAttribute() {
 		System.out.print("Enter attribute name: ");
 		String attributeName = scan.next().toUpperCase();
@@ -123,7 +140,10 @@ public class SuppliersMenu {
 			System.out.println(supplier);
 		}
 	}
-
+	
+	/**
+	 * Displays all the supplier details
+	 */
 	private void getAllEntities() {
 		List<Supplier> suppliers = supplierDao.findAll();
 		
